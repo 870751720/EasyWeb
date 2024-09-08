@@ -38,10 +38,10 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          scp -i /path/to/private/key flask-app.tar.gz username@your.server.ip.address:/home/username/
-          ssh -i /path/to/private/key username@your.server.ip.address << EOF
-            gunzip /home/username/flask-app.tar.gz
-            docker load -i /home/username/flask-app.tar
+          scp -i /path/to/private/key flask-app.tar.gz root@123.207.50.78:/home/root/
+          ssh -i /path/to/private/key root@123.207.50.78 << EOF
+            gunzip /home/root/flask-app.tar.gz
+            docker load -i /home/root/flask-app.tar
             docker stop flask-app || true
             docker rm flask-app || true
             docker run -d --name flask-app -p 80:80 flask-app
