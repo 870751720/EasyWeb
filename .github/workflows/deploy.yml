@@ -35,7 +35,7 @@ jobs:
             docker load -i /tmp/flask-app.tar.gz
             docker stop flask-app || true
             docker rm flask-app || true
-            docker run -d --name flask-app -p 80:80 123.207.50.78:5000/flask-app
+            docker run -d --name flask-app -p 80:80 flask-app
           EOF
 
           # Clean up

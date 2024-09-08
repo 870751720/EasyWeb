@@ -1,21 +1,16 @@
-# 使用官方 Python 作为父镜像
-FROM python:3.9-slim
+# syntax=docker/dockerfile:1
 
-# 设置工作目录
-WORKDIR /app
+FROM python:3.10-slim-buster
 
-# 复制要求文件并安装依赖
+RUN apt update && apt install -y cmake g++ make ffmpeg libsm6 libxext6 wget
+
+WORKDIR /python-docker
+
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-# 复制应用程序代码
 COPY . .
 
-# 公开应用程序端口
-EXPOSE 80
+ENV IN_DOCKER=true
 
-# 设置环境变量
-ENV FLASK_APP=app.py
-
-# 启动 Flask 应用
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD [ "python3", "-m" , "flask", "--app", "app", "run", "--host", "0.0.0.0"]
