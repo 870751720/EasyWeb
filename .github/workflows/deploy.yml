@@ -16,8 +16,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-
-
       - name: Build Docker image
         run: docker build -t flask-app .
 
@@ -35,7 +33,7 @@ jobs:
             docker load -i /tmp/flask-app.tar.gz
             docker stop flask-app || true
             docker rm flask-app || true
-            docker run -d --name flask-app -p 80:80 flask-app
+            docker run -d --name flask-app -p 80:5000 flask-app
           EOF
 
           # Clean up
