@@ -38,11 +38,13 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "move image"
-          scp -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") -T -o StrictHostKeyChecking=no $IMAGE_NAME.tar.gz root@$SERVER_IP:/tmp/$IMAGE_NAME.tar.gz
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          scp -i private_key.pem -T  -o StrictHostKeyChecking=no $IMAGE_NAME.tar.gz $USER_NAME@$SERVER_IP:/tmp/$IMAGE_NAME.tar.gz
           echo "upload deploy script"
-          scp -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") -T -o StrictHostKeyChecking=no deploy.sh root@$SERVER_IP:/tmp/deploy.sh
+          scp -i private_key.pem -T  -o StrictHostKeyChecking=no deploy.sh $USER_NAME@$SERVER_IP:/tmp/deploy.sh
           echo "run deploy script"
-          ssh -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") -T -o StrictHostKeyChecking=no root@$SERVER_IP << EOF
+          ssh -i private_key.pem -T T -o StrictHostKeyChecking=no $USER_NAME@$SERVER_IP << EOF
           chmod +x /tmp/deploy.sh
           /tmp/deploy.sh $IMAGE_NAME '$DAEMON_JSON'
           EOF
+          rm private_key.pem
