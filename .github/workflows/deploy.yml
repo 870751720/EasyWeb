@@ -3,7 +3,7 @@ name: Deploy App
 on:
   push:
     tags:
-      - 'relase*'
+      - 'release*'
 
 jobs:
   build_and_deploy:
