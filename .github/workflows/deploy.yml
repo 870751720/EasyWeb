@@ -24,19 +24,13 @@ jobs:
       - name: Save Docker image
         run: docker save flask-app | gzip > flask-app.tar.gz
 
-      - name: Upload Docker image
-        uses: actions/upload-artifact@v3
-        with:
-          name: flask-app-image
-          path: flask-app.tar.gz
-
       - name: Deploy to server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          scp -i private_key.pem -T -o StrictHostKeyChecking=no flask-app/flask-app.tar.gz root@123.207.50.78:/tmp/flask-app.tar.gz
+          scp -i private_key.pem -T -o StrictHostKeyChecking=no flask-app.tar.gz root@123.207.50.78:/tmp/flask-app.tar.gz
           ssh -i private_key.pem -T -o StrictHostKeyChecking=no root@123.207.50.78 << EOF
             docker load -i /tmp/flask-app.tar.gz
             docker stop flask-app || true
