@@ -39,6 +39,7 @@ jobs:
         run: |
           echo "move image"
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
           scp -i private_key.pem -T  -o StrictHostKeyChecking=no $IMAGE_NAME.tar.gz $USER_NAME@$SERVER_IP:/tmp/$IMAGE_NAME.tar.gz
           echo "upload deploy script"
           scp -i private_key.pem -T  -o StrictHostKeyChecking=no deploy.sh $USER_NAME@$SERVER_IP:/tmp/deploy.sh
