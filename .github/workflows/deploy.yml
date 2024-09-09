@@ -31,6 +31,16 @@ jobs:
           source: ./
           target: /tmp/app
 
+      - name: Send deploy to server
+        uses: appleboy/scp-action@v0.1.0
+        with:
+          host: ${{ env.SERVER_IP }}
+          username: ${{ env.USER_NAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: deploy.sh
+          target: /tmp
+
       - name: Run deploy script
         uses: appleboy/ssh-action@v0.1.0
         with:
