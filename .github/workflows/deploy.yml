@@ -43,16 +43,15 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
 
-      - name: Copy deploy script to server
-        uses: appleboy/ssh-action@v0.1.0
+      - name: Send to server
+        uses: appleboy/scp-action@v0.1.0
         with:
           host: ${{ env.SERVER_IP }}
           username: ${{ env.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: |
-            echo "Copying deploy.sh script to the server"
-            scp -i ${{ secrets.SSH_PRIVATE_KEY }} -P 22 deploy.sh ${{ env.USER_NAME }}@${{ env.SERVER_IP }}:/tmp/deploy.sh
+          source: deploy.sh
+          target: /tmp
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.0
