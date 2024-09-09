@@ -70,4 +70,4 @@ jobs:
           port: 22
           script: |
             chmod +x /tmp/deploy.sh
-            /tmp/deploy.sh ${{ env.IMAGE_NAME }}
+            /tmp/deploy.sh ${{ env.IMAGE_NAME }} ${{ github.actor }}
