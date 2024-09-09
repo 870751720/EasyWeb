@@ -16,17 +16,15 @@ jobs:
       - name: Set up environment variables
         id: setup_env
         run: |
-          source <(grep -E 'IMAGE_NAME|SERVER_IP|DAEMON_JSON|USER_NAME' config.ini | sed 's/^\(.*\)=\(.*\)$/export \1="\2"/')
+          source <(grep -E 'IMAGE_NAME|SERVER_IP|USER_NAME' config.ini | sed 's/^\(.*\)=\(.*\)$/export \1="\2"/')
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
           echo "SERVER_IP=$SERVER_IP" >> $GITHUB_ENV
-          echo "DAEMON_JSON=$DAEMON_JSON" >> $GITHUB_ENV
           echo "USER_NAME=$USER_NAME" >> $GITHUB_ENV
 
       - name: Debug environment variables
         run: |
           echo "IMAGE_NAME=${{ env.IMAGE_NAME }}"
           echo "SERVER_IP=${{ env.SERVER_IP }}"
-          echo "DAEMON_JSON=${{ env.DAEMON_JSON }}"
           echo "USER_NAME=${{ env.USER_NAME }}"
 
       - name: Log in to GitHub Container Registry
@@ -43,7 +41,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
 
-      - name: Send to server
+      - name: Send deploy to server
         uses: appleboy/scp-action@v0.1.0
         with:
           host: ${{ env.SERVER_IP }}
@@ -52,6 +50,16 @@ jobs:
           port: 22
           source: deploy.sh
           target: /tmp
+
+      - name: Send daemon to server
+        uses: appleboy/scp-action@v0.1.0
+        with:
+          host: ${{ env.SERVER_IP }}
+          username: ${{ env.USER_NAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: daemon.json
+          target: /etc/docker
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.0
@@ -62,4 +70,4 @@ jobs:
           port: 22
           script: |
             chmod +x /tmp/deploy.sh
-            /tmp/deploy.sh ${{ env.IMAGE_NAME }} '${{ env.DAEMON_JSON }}'
+            /tmp/deploy.sh ${{ env.IMAGE_NAME }}
