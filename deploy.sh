@@ -1,7 +1,8 @@
 #!/bin/bash
 IMAGE_NAME=$1
 DAEMON_JSON=$2
-
+echo "DAEMON_JSON content:"
+echo "$DAEMON_JSON"
 if ! command -v docker &> /dev/null; then
   sudo apt update
   sudo mkdir -p /etc/docker
