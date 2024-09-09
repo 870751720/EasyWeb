@@ -5,7 +5,7 @@ DAEMON_JSON=$2
 if ! command -v docker &> /dev/null; then
   sudo apt update
   sudo mkdir -p /etc/docker
-  echo $DAEMON_JSON | sudo tee /etc/docker/daemon.json > /dev/null
+  printf '%s' "$DAEMON_JSON" | sudo tee /etc/docker/daemon.json > /dev/null
   sudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
