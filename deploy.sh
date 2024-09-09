@@ -1,8 +1,6 @@
 #!/bin/bash
 IMAGE_NAME=$1
-GITHUB_ACTOR=$2
-DOCKER_TOKEN=$3
-echo "GITHUB_ACTOR: $GITHUB_ACTOR"
+
 if ! command -v docker &> /dev/null; then
   sudo yum remove -y docker-ce docker-ce-cli containerd.io
   sudo rm -rf /var/lib/docker
@@ -15,11 +13,11 @@ if ! command -v docker &> /dev/null; then
   sudo systemctl enable docker
 fi
 
-docker login ghcr.io -u $GITHUB_ACTOR -p $DOCKER_TOKEN
+cd /tmp/app
 
-docker pull ghcr.io/$GITHUB_ACTOR/$IMAGE_NAME:latest
+docker build -t $IMAGE_NAME .
 
 docker stop $IMAGE_NAME || true
 docker rm $IMAGE_NAME || true
 
-docker run -d --name $IMAGE_NAME -p 80:5000 ghcr.io/$GITHUB_ACTOR/$IMAGE_NAME:latest
+docker run -d --name $IMAGE_NAME -p 80:5000 $IMAGE_NAME
