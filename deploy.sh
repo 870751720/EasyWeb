@@ -15,7 +15,7 @@ if ! command -v docker &> /dev/null; then
   sudo systemctl enable docker
 fi
 
-docker login ghcr.io -u $USER_NAME -p $GITHUB_TOKEN
+docker login ghcr.io -u $USER_NAME -p $DOCKER_TOKEN
 docker pull ghcr.io/$USER_NAME/$IMAGE_NAME:latest
 
 docker stop $IMAGE_NAME || true
