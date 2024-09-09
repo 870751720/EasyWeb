@@ -1,8 +1,4 @@
 { "registry-mirrors" : [
-	"https:\/\/jockerhub.com",
-	"https:\/\/docker.m.daocloud.io",
-	"https:\/\/dockerhub.icu",
-	"https:\/\/docker.anyhub.us.kg",
-	"https:\/\/docker.1panel.live"
+	"https://2adwxpd3.mirror.aliyuncs.com"
 	]
 }
