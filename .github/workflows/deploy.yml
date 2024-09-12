@@ -15,17 +15,10 @@ jobs:
 
       - name: Set up environment variables
         uses: falti/dotenv-action@v1.1.4
+        id: dotenv
         with:
           path: project/docker/config.env
           keys-case: bypass
-          log-variables: true
-
-      - name: Print environment variables
-        run: |
-          echo "SERVER_IP=${{ steps.dotenv.outputs.SERVER_IP }}"
-          echo "USER_NAME=${{ steps.dotenv.outputs.USER_NAME }}"
-          echo "SERVER_IP=${{ steps.dotenv.outputs.server_ip }}"
-          echo "USER_NAME=${{ steps.dotenv.outputs.user_name }}"
 
       - name: Deploy project to server
         uses: appleboy/scp-action@v0.1.0
