@@ -4,8 +4,8 @@ services:
   web:
     build:
       context: .
-      dockerfile: ${IMAGE_NAME}
-    container_name: flask_app
+      dockerfile: Dockerfile-Web
+    container_name: ${IMAGE_NAME}
     ports:
       - "80:5000"
     environment:
@@ -16,6 +16,8 @@ services:
       - MYSQL_DB=${MYSQL_DATABASE}
     depends_on:
       - db
+    env_file:
+      - config.env
 
   db:
     image: mysql:8.0
@@ -26,6 +28,8 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    env_file:
+      - config.env
 
 volumes:
   mysql_data:
