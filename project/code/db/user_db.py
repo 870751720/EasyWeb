@@ -1,4 +1,4 @@
-from project.code.db import db
+from db.db import db
 
 
 class User(db.Model):

@@ -1,7 +1,7 @@
 from flask import Flask
-from project.code.blueprints import register_blueprints
-from project.code.db.db import init_db
-from project.code.errors import init_error
+from blueprints import register_blueprints
+from db.db import init_db
+from errors import init_error
 
 
 def create_app():
