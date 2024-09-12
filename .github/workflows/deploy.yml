@@ -28,7 +28,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: project
-          target: /tmp/project
+          target: /tmp
 
       - name: Run deploy script
         uses: appleboy/ssh-action@v0.1.0
