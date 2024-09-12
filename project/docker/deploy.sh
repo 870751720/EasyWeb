@@ -1,5 +1,4 @@
 #!/bin/bash
-IMAGE_NAME=$1
 
 if ! command -v docker &> /dev/null; then
   sudo yum remove -y docker-ce docker-ce-cli containerd.io
@@ -13,11 +12,10 @@ if ! command -v docker &> /dev/null; then
   sudo systemctl enable docker
 fi
 
-cd /tmp/app
+if ! command -v docker-compose &> /dev/null; then
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+fi
 
-docker build -t $IMAGE_NAME .
-
-docker stop $IMAGE_NAME || true
-docker rm $IMAGE_NAME || true
-
-docker run -d --name $IMAGE_NAME -p 80:5000 $IMAGE_NAME
+cd /tmp/project/docker
+docker-compose up -d --build
