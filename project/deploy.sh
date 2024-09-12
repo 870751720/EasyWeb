@@ -17,5 +17,5 @@ if ! command -v docker-compose &> /dev/null; then
   sudo chmod +x /usr/local/bin/docker-compose
 fi
 
-cd /tmp/project/docker
+cd /tmp/project
 docker-compose --env-file=config.env up -d --build
