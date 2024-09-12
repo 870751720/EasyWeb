@@ -18,4 +18,5 @@ if ! command -v docker-compose &> /dev/null; then
 fi
 
 cd /tmp/project
+docker-compose down --rmi all
 docker-compose --env-file=config.env up -d --build
