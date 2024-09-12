@@ -18,6 +18,11 @@ jobs:
         with:
           path: project/docker/config.env
 
+      - name: Print environment variables
+        run: |
+          echo "SERVER_IP=${{ steps.dotenv.outputs.SERVER_IP }}"
+          echo "USER_NAME=${{ steps.dotenv.outputs.USER_NAME }}"
+
       - name: Deploy project to server
         uses: appleboy/scp-action@v0.1.0
         with:
