@@ -58,3 +58,23 @@ def delete_user_route():
 	db.session.commit()
 
 	return jsonify({'message': 'User deleted successfully'}), 200
+
+
+@user_bp.route('/user_info', methods=['POST'])
+def get_user_info():
+	data = request.json
+	user_id = data.get('user_id')
+
+	if not user_id:
+		return jsonify({'error': 'User ID is required'}), 400
+
+	user = User.query.get(user_id)
+	if not user:
+		return jsonify({'error': 'User not found'}), 404
+
+	user_info = {
+		'user_id': user.id,
+		'username': user.username,
+	}
+
+	return jsonify({'user_info': user_info}), 200

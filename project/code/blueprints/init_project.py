@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_migrate import upgrade, migrate, init as migrate_init
-from db import db
+from db.db import db
 
 
 init_project_bp = Blueprint('init_project', __name__)
