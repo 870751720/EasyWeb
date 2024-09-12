@@ -6,6 +6,8 @@ RUN apt update && apt install -y cmake g++ make ffmpeg libsm6 libxext6 wget
 
 WORKDIR /web-docker
 
+ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
+
 COPY ./code/requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
