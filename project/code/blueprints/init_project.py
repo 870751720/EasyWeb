@@ -3,7 +3,7 @@ from flask_migrate import upgrade, migrate, init as migrate_init
 from db import db
 
 
-init_bp = Blueprint('init', __name__)
+init_bp = Blueprint('init_project', __name__)
 
 @init_bp.route('/create_tables', methods=['POST'])
 def create_tables():
