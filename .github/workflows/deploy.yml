@@ -17,6 +17,7 @@ jobs:
         uses: falti/dotenv-action@v1.1.4
         with:
           path: project/docker/config.env
+          keys-case: bypass
 
       - name: Print environment variables
         run: |
