@@ -18,6 +18,7 @@ jobs:
         with:
           path: project/docker/config.env
           keys-case: bypass
+          log-variables: true
 
       - name: Print environment variables
         run: |
