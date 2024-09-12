@@ -19,8 +19,8 @@ jobs:
       - name: Deploy project to server
         uses: appleboy/scp-action@v0.1.0
         with:
-          host: ${{ env.SERVER_IP }}
-          username: ${{ env.USER_NAME }}
+          host: ${{ steps.dotenv.outputs.SERVER_IP }}
+          username: ${{ steps.dotenv.outputs.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: project
@@ -29,8 +29,8 @@ jobs:
       - name: Run deploy script
         uses: appleboy/ssh-action@v0.1.0
         with:
-          host: ${{ env.SERVER_IP }}
-          username: ${{ env.USER_NAME }}
+          host: ${{ steps.dotenv.outputs.SERVER_IP }}
+          username: ${{ steps.dotenv.outputs.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
