@@ -1,6 +1,7 @@
 import os
-from flask import Flask
 import mysql.connector
+from flask import Flask
+
 
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ def index():
     cursor = db.cursor()
     cursor.execute('SELECT VERSION()')
     version = cursor.fetchone()
-    return f'MySQL version: {version[0]}'
+    return f'MySQL versionz: {version[0]}'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
