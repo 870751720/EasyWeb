@@ -8,10 +8,10 @@ WORKDIR /web-docker
 
 ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
 
-COPY ./server_code/requirements.txt requirements.txt
+COPY ./easy_server/requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY ./server_code .
+COPY ./easy_server .
 
 COPY ./easy_react/build ./statics
 
