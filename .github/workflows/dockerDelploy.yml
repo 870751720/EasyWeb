@@ -41,7 +41,7 @@ jobs:
           username: ${{ steps.dotenv.outputs.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: mysql_8.0.tar, python_3.11.tar, project/dockerDeploy.sh
+          source: mysql_8.0.tar, python_3.11.tar, dockerDeploy.sh
           target: /tmp
 
       - name: Run deploy script
