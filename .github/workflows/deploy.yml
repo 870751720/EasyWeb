@@ -26,12 +26,12 @@ jobs:
 
       - name: Install React dependencies
         run: |
-          cd easy_react
+          cd project/easy_react
           npm install
 
       - name: Build React app
         run: |
-          cd easy_react
+          cd project/easy_react
           npm run build
 
       - name: Deploy project to server
