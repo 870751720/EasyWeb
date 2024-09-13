@@ -25,6 +25,7 @@ jobs:
         run: |
           docker save mysql:8.0 -o mysql_8.0.tar
           docker save python:3.11-slim-buster -o python_3.11.tar
+          chmod 644 mysql_8.0.tar python_3.11.tar
 
       - name: Set up environment variables
         uses: falti/dotenv-action@v1.1.4
