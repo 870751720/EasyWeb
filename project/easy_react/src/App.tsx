@@ -1,40 +1,16 @@
 import React from 'react';
-import { useRequest } from 'ahooks';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // 更新导入
+import Login from './components/Login';
 
 const App: React.FC = () => {
-  const { run, loading } = useRequest(
-    async (username: string, password: string) => {
-      const response = await fetch('/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      return response.json();
-    },
-    {
-      manual: true,
-    }
-  );
-
-  const handleRegister = async () => {
-    const username = 'your_username';
-    const password = 'your_password';
-    const result = await run(username, password);
-    console.log(result);
-  };
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={handleRegister} disabled={loading}>
-          {loading ? '注册中...' : '注册用户'}
-        </button>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <Routes> {/* 更新这里 */}
+                <Route path="/login" element={<Login />} /> {/* 更新这里 */}
+                <Route path="/" element={<Navigate to="/login" />} /> {/* 更新这里 */}
+            </Routes> {/* 更新这里 */}
+        </Router>
+    );
 };
 
 export default App;
