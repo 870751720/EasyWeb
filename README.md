@@ -18,5 +18,6 @@ nvm use 22.1.0
 3
 npx create-react-app easy_react
 # todo
+
 添加图片视频资源
 以及对资源的上传保存等
