@@ -19,6 +19,20 @@ jobs:
         with:
           path: project/config.env
           keys-case: bypass
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install React dependencies
+        run: |
+          cd easy_react
+          npm install
+
+      - name: Build React app
+        run: |
+          cd easy_react
+          npm run build
 
       - name: Deploy project to server
         uses: appleboy/scp-action@v0.1.0
