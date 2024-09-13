@@ -36,7 +36,7 @@ jobs:
           rm -rf project/easy_react/node_modules
 
       - name: Deploy project to server
-        uses: appleboy/scp-action@v0.1.0
+        uses: appleboy/scp-action@master
         with:
           host: ${{ steps.dotenv.outputs.SERVER_IP }}
           username: ${{ steps.dotenv.outputs.USER_NAME }}
