@@ -1,4 +1,5 @@
 from flask import Flask, send_from_directory
+from flask_cors import CORS
 from blueprints import register_blueprints
 from db.db import init_db
 from errors import init_error
@@ -14,6 +15,7 @@ def create_app():
 	init_db(app)
 	init_error(app)
 	register_blueprints(app)
+	CORS(app)
 	return app
 
 

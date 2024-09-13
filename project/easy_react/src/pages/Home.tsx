@@ -13,6 +13,9 @@ const Home: React.FC = () => {
                         <Link to="/login">前往登录页面</Link>
                     </li>
                     <li>
+                        <Link to="/register">前往注册页面</Link>
+                    </li>
+                    <li>
                         <Link to="/admin">前往后台管理页面</Link>
                     </li>
                 </ul>
