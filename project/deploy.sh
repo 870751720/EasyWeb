@@ -18,5 +18,5 @@ if ! command -v docker-compose &> /dev/null; then
 fi
 
 cd /tmp/project
-docker-compose down --rmi all
+docker-compose down
 docker-compose up -d --build
