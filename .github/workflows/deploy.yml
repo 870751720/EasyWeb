@@ -17,7 +17,7 @@ jobs:
         uses: falti/dotenv-action@v1.1.4
         id: dotenv
         with:
-          path: project/config.env
+          path: project/.env
           keys-case: bypass
       - name: Set up Node.js
         uses: actions/setup-node@v3

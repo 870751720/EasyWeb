@@ -19,4 +19,4 @@ fi
 
 cd /tmp/project
 docker-compose down --rmi all
-docker-compose --env-file=./config.env up -d --build
+docker-compose up -d --build
