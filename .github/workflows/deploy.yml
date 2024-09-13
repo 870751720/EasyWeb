@@ -33,7 +33,7 @@ jobs:
         run: |
           cd project/easy_react
           npm run build
-          rm -rf project/easy_react/node_modules
+          rm ./node_modules
 
       - name: Deploy project to server
         uses: appleboy/scp-action@master
