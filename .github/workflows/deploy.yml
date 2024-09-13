@@ -44,7 +44,6 @@ jobs:
           port: 22
           source: project
           target: /tmp
-          debug: true
 
       - name: Run deploy script
         uses: appleboy/ssh-action@v0.1.0
