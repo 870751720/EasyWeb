@@ -14,6 +14,9 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DB=${MYSQL_DATABASE}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - SERVER_IP=${SERVER_IP}
     depends_on:
       - db
 

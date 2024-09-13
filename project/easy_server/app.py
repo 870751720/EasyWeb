@@ -3,6 +3,7 @@ from flask_cors import CORS
 from blueprints import register_blueprints
 from db.db import init_db
 from errors import init_error
+from utils.mail import init_mail
 
 
 def create_app():
@@ -13,6 +14,7 @@ def create_app():
 		return send_from_directory(app.static_folder, "index.html")
 
 	init_db(app)
+	init_mail(app)
 	init_error(app)
 	register_blueprints(app)
 	CORS(app)
