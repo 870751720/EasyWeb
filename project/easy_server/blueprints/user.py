@@ -28,7 +28,7 @@ def register_user():
 	return jsonify({"message": "Verification code sent to email"}), 200
 
 
-@user_bp.route("/verify", methods=["POST"])
+@user_bp.route("/verify", methods=["GET"])
 def verify_registration():
 	data = request.json
 	email = data.get("email")
