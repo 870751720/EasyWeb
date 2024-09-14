@@ -98,3 +98,26 @@ def get_user_info():
 	}
 
 	return jsonify({"user_info": user_info}), 200
+
+
+@user_bp.route("/users_count", methods=["GET"])
+def get_users_count():
+	users_count = User.query.count()
+	return jsonify({"users_count": users_count}), 200
+
+
+@user_bp.route("/users", methods=["POST"])
+def	get_users():
+	data = request.json
+	page = data.get("page")
+	page_size = data.get("page_size")
+	users = User.query.offset((page - 1) * page_size).limit(page_size).all()
+	users_info = []
+	for user in users:
+		user_info = {
+			"user_id": user.id,
+			"username": user.username,
+			"email": user.email,
+		}
+		users_info.append(user_info)
+	return jsonify({"users": users_info}), 200

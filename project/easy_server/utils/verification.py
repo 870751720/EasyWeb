@@ -8,7 +8,7 @@ verification_codes = {}
 
 def send_verification_email(email, verification_code):
 	subject = "注册用户"
-	verification_link = f"http://{os.getenv('SERVER_IP')}/verify?email={email}&code={verification_code}"
+	verification_link = f"http://{os.getenv('SERVER_IP')}/user/verify?email={email}&code={verification_code}"
 	body = f"请点击以下链接进行验证: {verification_link}"
 	send_mail(subject, email, body)
 
