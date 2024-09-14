@@ -5,7 +5,7 @@ from db.db import db
 
 init_project_bp = Blueprint('init_project', __name__)
 
-@init_project_bp.route('/create_tables', methods=['POST'])
+@init_project_bp.route('/create_tables', methods=['GET'])
 def create_tables():
 	try:
 		db.create_all()
