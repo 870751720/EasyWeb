@@ -17,7 +17,7 @@ const Admin: React.FC = () => {
         setLoading(true);
         setError('');
         try {
-            const response = await fetch(`${API_BASE_URL}/users`, {
+            const response = await fetch(`${API_BASE_URL}/user/users`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
