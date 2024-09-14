@@ -23,3 +23,12 @@ def run_migrations():
 		return jsonify({'message': 'Migrations run successfully'}), 200
 	except Exception as e:
 		return jsonify({'error': str(e)}), 500
+
+
+@init_project_bp.route('/delete_tables', methods=['GET'])
+def delete_tables():
+	try:
+		db.drop_all()
+		return jsonify({'message': 'All tables deleted successfully'}), 200
+	except Exception as e:
+		return jsonify({'error': str(e)}), 500

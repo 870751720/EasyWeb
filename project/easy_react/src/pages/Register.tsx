@@ -5,8 +5,10 @@ import API_BASE_URL from '../config/config';
 const Register: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState(''); // 添加邮箱状态
-    const [responseMessage, setResponseMessage] = useState(''); // 添加响应消息状态
+    const [email, setEmail] = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
+    const [deleteMessage, setDeleteMessage] = useState(''); // 添加删除表的消息状态
+    const [createMessage, setCreateMessage] = useState(''); // 添加创建表的消息状态
 
     const { run: registerUser, loading } = useRequest(
         async () => {
@@ -15,7 +17,7 @@ const Register: React.FC = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password, email }), // 包含邮箱
+                body: JSON.stringify({ username, password, email }),
             });
             if (!response.ok) {
                 throw new Error('注册失败');
@@ -26,11 +28,59 @@ const Register: React.FC = () => {
             manual: true,
             onSuccess: (data) => {
                 console.log('注册成功:', data);
-                setResponseMessage(data.message); // 显示成功消息
+                setResponseMessage(data.message);
             },
             onError: (error) => {
                 console.error('注册错误:', error);
-                setResponseMessage(error.message); // 显示错误消息
+                setResponseMessage(error.message);
+            },
+        }
+    );
+
+    // 添加删除数据表的请求
+    const { run: deleteTables, loading: deleting } = useRequest(
+        async () => {
+            const response = await fetch(`${API_BASE_URL}/delete_tables`, {
+                method: 'GET',
+            });
+            if (!response.ok) {
+                throw new Error('删除数据表失败');
+            }
+            return response.json();
+        },
+        {
+            manual: true,
+            onSuccess: (data) => {
+                console.log('删除成功:', data);
+                setDeleteMessage(data.message);
+            },
+            onError: (error) => {
+                console.error('删除错误:', error);
+                setDeleteMessage(error.message);
+            },
+        }
+    );
+
+    // 添加创建数据表的请求
+    const { run: createTables, loading: creating } = useRequest(
+        async () => {
+            const response = await fetch(`${API_BASE_URL}/create_tables`, {
+                method: 'GET',
+            });
+            if (!response.ok) {
+                throw new Error('创建数据表失败');
+            }
+            return response.json();
+        },
+        {
+            manual: true,
+            onSuccess: (data) => {
+                console.log('创建成功:', data);
+                setCreateMessage(data.message);
+            },
+            onError: (error) => {
+                console.error('创建错误:', error);
+                setCreateMessage(error.message);
             },
         }
     );
@@ -63,7 +113,7 @@ const Register: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label>邮箱:</label> {/* 添加邮箱输入框 */}
+                    <label>邮箱:</label>
                     <input
                         type="email"
                         value={email}
@@ -75,7 +125,20 @@ const Register: React.FC = () => {
                     {loading ? '注册中...' : '注册'}
                 </button>
             </form>
-            {responseMessage && <p>{responseMessage}</p>} {/* 显示服务器返回的结果 */}
+
+            {responseMessage && <p>{responseMessage}</p>}
+
+            {/* 添加删除数据表的按钮 */}
+            <button onClick={() => deleteTables()} disabled={deleting}>
+                {deleting ? '删除中...' : '删除数据表'}
+            </button>
+            {deleteMessage && <p>{deleteMessage}</p>}
+
+            {/* 添加创建数据表的按钮 */}
+            <button onClick={() => createTables()} disabled={creating}>
+                {creating ? '创建中...' : '创建数据表'}
+            </button>
+            {createMessage && <p>{createMessage}</p>}
         </div>
     );
 };
