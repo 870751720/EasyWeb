@@ -30,9 +30,8 @@ def register_user():
 
 @user_bp.route("/verify", methods=["GET"])
 def verify_registration():
-	data = request.json
-	email = data.get("email")
-	verification_code = data.get("code")
+	email = request.args.get("email")
+	verification_code = request.args.get("code")
 	info = verify_code(email, verification_code)
 	if info:
 		new_user = User(username=info["username"], password=info["password"], email=email)
