@@ -40,7 +40,7 @@ const Register: React.FC = () => {
     // 添加删除数据表的请求
     const { run: deleteTables, loading: deleting } = useRequest(
         async () => {
-            const response = await fetch(`${API_BASE_URL}/delete_tables`, {
+            const response = await fetch(`${API_BASE_URL}/init_project/delete_tables`, {
                 method: 'GET',
             });
             if (!response.ok) {
@@ -64,7 +64,7 @@ const Register: React.FC = () => {
     // 添加创建数据表的请求
     const { run: createTables, loading: creating } = useRequest(
         async () => {
-            const response = await fetch(`${API_BASE_URL}/create_tables`, {
+            const response = await fetch(`${API_BASE_URL}/init_project/create_tables`, {
                 method: 'GET',
             });
             if (!response.ok) {
