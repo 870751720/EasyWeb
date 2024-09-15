@@ -1,5 +1,5 @@
 from flask import g
-from localize_data import localize_info
+from utils.localize_data import localize_info
 
 
 def _l(message_id):
