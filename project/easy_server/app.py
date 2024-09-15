@@ -15,7 +15,6 @@ def create_app():
 	register_blueprints(app)
 	CORS(app)
 
-	app.config["SECRET_KEY"] = "4d362127bea8fb5f6cd1fb9a06b2e32a4c4bff33838c9fa8"
 	return app
 
 
