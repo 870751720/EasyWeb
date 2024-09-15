@@ -17,6 +17,8 @@ localize_info = {
 		"TID_USER_DELETE_SUCCESS": "User deleted successfully",
 		"TID_INIT_PROJECT_CREAT_TABLE_SUCCESS": "All tables created successfully",
 		"TID_INIT_PROJECT_MIGRATIONS_SUCCESS": "Migrations run successfully",
+		"TID_PAGE_NOT_FOUND": "Page not found",
+		"TID_PAGE_SERVER_ERROR": "Internal server error",
 	},
 	"ch": {
 		"TID_USER_INFO_NEED": "邮箱，用户名和密码是必填项",
@@ -34,5 +36,7 @@ localize_info = {
 		"TID_USER_DELETE_SUCCESS": "用户删除成功",
 		"TID_INIT_PROJECT_CREAT_TABLE_SUCCESS": "所有表创建成功",
 		"TID_INIT_PROJECT_MIGRATIONS_SUCCESS": "迁移成功",
+		"TID_PAGE_NOT_FOUND": "页面不存在",
+		"TID_PAGE_SERVER_ERROR": "内部服务器错误",
 	}
 }

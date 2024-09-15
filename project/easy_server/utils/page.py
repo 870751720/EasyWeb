@@ -1,4 +1,5 @@
 from flask import jsonify, send_from_directory, request, g
+from utils.localize import _l
 
 
 def init_page(app):
@@ -13,8 +14,8 @@ def init_page(app):
 
 	@app.errorhandler(404)
 	def handle_not_found_error(error):
-		return jsonify({"error": "Page not found", "status": 404})
+		return jsonify({"error": _l("TID_PAGE_NOT_FOUND"), "status": 404})
 
 	@app.errorhandler(500)
 	def handle_internal_error(error):
-		return jsonify({"error": "Internal server error", "status": 500})
+		return jsonify({"error": _l("TID_PAGE_SERVER_ERROR"), "status": 500})

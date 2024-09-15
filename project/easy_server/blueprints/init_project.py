@@ -3,6 +3,7 @@ from flask_migrate import upgrade, migrate, init as migrate_init
 from db.db import db
 from db.user_db import User
 from utils.auth import token_and_roles_required
+from utils.localize import _l
 
 
 init_project_bp = Blueprint("init_project", __name__)
@@ -21,7 +22,7 @@ def create_tables():
 		)
 		db.session.add(superadmin)
 		db.session.commit()
-		return jsonify({"message": "All tables created successfully", "status": 200})
+		return jsonify({"message": _l("TID_INIT_PROJECT_CREAT_TABLE_SUCCESS"), "status": 200})
 	except Exception as e:
 		return jsonify({"error": str(e), "status": 0})
 
@@ -33,6 +34,6 @@ def run_migrations():
 		migrate_init()
 		migrate()
 		upgrade()
-		return jsonify({"message": "Migrations run successfully", "status": 200})
+		return jsonify({"message": _l("TID_INIT_PROJECT_MIGRATIONS_SUCCESS"), "status": 200})
 	except Exception as e:
 		return jsonify({"error": str(e), "status": 0})

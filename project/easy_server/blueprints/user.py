@@ -2,7 +2,7 @@ import random
 from flask import Blueprint, request, jsonify
 from db.db import db
 from db.user_db import User
-from locale import _l
+from utils.localize import _l
 from utils.auth import token_and_roles_required, get_token
 from utils.verification import send_verification_email, verify_code, store_verification_code
 from werkzeug.security import generate_password_hash, check_password_hash
