@@ -2,145 +2,136 @@ import React, { useState } from 'react';
 import { useRequest } from 'ahooks';
 import API_BASE_URL from '../config/config';
 
-const Register: React.FC = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const Login: React.FC = () => {
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [newUsername, setNewUsername] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
-    const [deleteMessage, setDeleteMessage] = useState(''); // 添加删除表的消息状态
-    const [createMessage, setCreateMessage] = useState(''); // 添加创建表的消息状态
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [token, setToken] = useState(''); // 保存token状态
 
-    const { run: registerUser, loading } = useRequest(
+    // 登录请求
+    const { run: loginUser, loading: loginLoading } = useRequest(
         async () => {
-            const response = await fetch(`${API_BASE_URL}/user/register`, {
+            const response = await fetch(`${API_BASE_URL}/user/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password, email }),
+                body: JSON.stringify({ email, password }),
             });
             if (!response.ok) {
-                throw new Error('注册失败');
+                throw new Error('登录失败');
             }
             return response.json();
         },
         {
             manual: true,
             onSuccess: (data) => {
-                console.log('注册成功:', data);
-                setResponseMessage(data.message);
+                console.log('登录成功:', data);
+                setIsLoggedIn(true);
+                setToken(data.token); // 保存token
+                setResponseMessage('登录成功');
             },
             onError: (error) => {
-                console.error('注册错误:', error);
-                setResponseMessage(error.message);
+                console.error('登录错误:', error);
+                setResponseMessage(error.message || '登录失败');
             },
         }
     );
 
-    // 添加删除数据表的请求
-    const { run: deleteTables, loading: deleting } = useRequest(
+    // 更改用户名请求
+    const { run: updateUsername, loading: updateLoading } = useRequest(
         async () => {
-            const response = await fetch(`${API_BASE_URL}/init_project/delete_tables`, {
-                method: 'GET',
+            const response = await fetch(`${API_BASE_URL}/user/update`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,  // 使用token进行身份验证
+                },
+                body: JSON.stringify({ username: newUsername }),
             });
             if (!response.ok) {
-                throw new Error('删除数据表失败');
+                throw new Error('用户名修改失败');
             }
             return response.json();
         },
         {
             manual: true,
             onSuccess: (data) => {
-                console.log('删除成功:', data);
-                setDeleteMessage(data.message);
+                console.log('用户名修改成功:', data);
+                setResponseMessage('用户名修改成功');
             },
             onError: (error) => {
-                console.error('删除错误:', error);
-                setDeleteMessage(error.message);
+                console.error('修改用户名错误:', error);
+                setResponseMessage(error.message || '用户名修改失败');
             },
         }
     );
 
-    // 添加创建数据表的请求
-    const { run: createTables, loading: creating } = useRequest(
-        async () => {
-            const response = await fetch(`${API_BASE_URL}/init_project/create_tables`, {
-                method: 'GET',
-            });
-            if (!response.ok) {
-                throw new Error('创建数据表失败');
-            }
-            return response.json();
-        },
-        {
-            manual: true,
-            onSuccess: (data) => {
-                console.log('创建成功:', data);
-                setCreateMessage(data.message);
-            },
-            onError: (error) => {
-                console.error('创建错误:', error);
-                setCreateMessage(error.message);
-            },
-        }
-    );
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleLoginSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        registerUser();
+        loginUser(); // 触发登录请求
+    };
+
+    const handleUsernameChangeSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        updateUsername(); // 触发用户名更改请求
     };
 
     return (
-        <div>
-            <h2>注册</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="login-container">
+            <h2 className="login-title">登录</h2>
+            <form className="login-form" onSubmit={handleLoginSubmit}>
                 <div>
-                    <label>用户名:</label>
+                    <label className="login-label">邮箱:</label>
                     <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>密码:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>邮箱:</label>
-                    <input
+                        className="login-input"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
-                <button type="submit" disabled={loading}>
-                    {loading ? '注册中...' : '注册'}
+                <div>
+                    <label className="login-label">密码:</label>
+                    <input
+                        className="login-input"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button className="login-button" type="submit" disabled={loginLoading}>
+                    {loginLoading ? '登录中...' : '登录'}
                 </button>
             </form>
 
             {responseMessage && <p>{responseMessage}</p>}
 
-            {/* 添加删除数据表的按钮 */}
-            <button onClick={() => deleteTables()} disabled={deleting}>
-                {deleting ? '删除中...' : '删除数据表'}
-            </button>
-            {deleteMessage && <p>{deleteMessage}</p>}
-
-            {/* 添加创建数据表的按钮 */}
-            <button onClick={() => createTables()} disabled={creating}>
-                {creating ? '创建中...' : '创建数据表'}
-            </button>
-            {createMessage && <p>{createMessage}</p>}
+            {isLoggedIn && (
+                <div>
+                    <h3>更改用户名</h3>
+                    <form onSubmit={handleUsernameChangeSubmit}>
+                        <div>
+                            <label className="login-label">新用户名:</label>
+                            <input
+                                className="login-input"
+                                type="text"
+                                value={newUsername}
+                                onChange={(e) => setNewUsername(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button className="login-button" type="submit" disabled={updateLoading}>
+                            {updateLoading ? '更改中...' : '更改用户名'}
+                        </button>
+                    </form>
+                </div>
+            )}
         </div>
     );
 };
 
-export default Register;
+export default Login;
