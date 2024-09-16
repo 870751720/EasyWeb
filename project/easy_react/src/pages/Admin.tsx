@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './Admin.css'; // 导入 CSS 文件
-import API_BASE_URL from '../config/config';
+import './Admin.css';
+import { useRequest } from 'ahooks';
+import { fetchPost } from '../utils/netUtil';
 
 const Admin: React.FC = () => {
     interface User {
@@ -9,66 +10,59 @@ const Admin: React.FC = () => {
         email: string;
     }
 
-    const [users, setUsers] = useState<User[]>([]); // 保存用户信息
-    const [loading, setLoading] = useState(false); // 控制加载状态
-    const [error, setError] = useState(''); // 保存错误信息
+    const [users, setUsers] = useState<User[]>([]);
+    const [responseMessage, setResponseMessage] = useState('');
 
-    const fetchUsers = async () => {
-        setLoading(true);
-        setError('');
-        try {
-            const response = await fetch(`${API_BASE_URL}/user/users`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    page: 1, // 获取第1页的数据
-                    page_size: 10, // 每页10个用户
-                }),
+    const { run: fetchUsersRequest, loading: fetchLoading } = useRequest(
+        async () => {
+            const response = await fetchPost('/user/users', {
+                page: 1,
+                page_size: 10,
             });
-
             if (!response.ok) {
                 throw new Error('获取用户信息失败');
             }
-
-            const data = await response.json();
-            setUsers(data.users); // 保存用户数据
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-                setError(err.message || '未知错误');
-            } else {
-                setError('未知错误');
-            }
-        } finally {
-            setLoading(false);
+            console.log('用户信息获取成功:', response);
+            return response.json();
+        },
+        {
+            manual: true,
+            onSuccess: (data) => {
+                console.log('用户信息获取成功:', data);
+                setUsers(data.users);
+                setResponseMessage('用户信息获取成功');
+            },
+            onError: (error) => {
+                console.error('获取用户信息错误:', error);
+                setResponseMessage(error.message || '获取用户信息失败');
+            },
         }
-    };
+    );
 
     return (
         <div className="admin-container">
             <h1>Admin Page</h1>
 
             {/* 显示用户信息的按钮 */}
-            <button onClick={fetchUsers} disabled={loading}>
-                {loading ? '加载中...' : '查看用户信息'}
+            <button onClick={fetchUsersRequest} disabled={fetchLoading}>
+                {fetchLoading ? '加载中...' : '查看用户信息'}
             </button>
 
-            {/* 错误提示 */}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {/* 错误或成功提示 */}
+            {responseMessage && <p>{responseMessage}</p>}
 
             {/* 用户信息列表 */}
             <div className="user-list">
                 {users.length > 0 ? (
                     <ul>
-                        {users.map((user) => (
+                        {users.map((user: User) => (
                             <li key={user.user_id}>
                                 用户ID: {user.user_id}, 用户名: {user.username}, 邮箱: {user.email}
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    !loading && <p>暂无用户信息</p>
+                    !fetchLoading && <p>暂无用户信息</p>
                 )}
             </div>
         </div>

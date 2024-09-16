@@ -11,7 +11,7 @@ def token_and_roles_required(allowed_roles=None):
 		def decorated(*args, **kwargs):
 			token = None
 			if "Authorization" in request.headers:
-				token = request.headers["Authorization"].split()[1]
+				token = request.headers["Authorization"]
 			if not token:
 				return jsonify({"error": "Token is missing", "status": -1})
 

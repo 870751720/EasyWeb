@@ -1,137 +1,123 @@
-import React, { useState } from 'react';
-import { useRequest } from 'ahooks';
-import API_BASE_URL from '../config/config';
+import React, { useState } from "react";
+import { useRequest } from "ahooks";
+import { Form, Input, message } from "antd";
+import { fetchPost } from "../utils/netUtil";
+import "./Register.css";
 
-const Login: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [newUsername, setNewUsername] = useState('');
-    const [responseMessage, setResponseMessage] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [token, setToken] = useState(''); // 保存token状态
+const Register: React.FC = () => {
+    const [responseMessage, setResponseMessage] = useState("");
 
-    // 登录请求
-    const { run: loginUser, loading: loginLoading } = useRequest(
-        async () => {
-            const response = await fetch(`${API_BASE_URL}/user/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+    const { run: registerUser, loading: registerLoading } = useRequest(
+        async (values) => {
+            const response = await fetchPost("/user/register", values);
             if (!response.ok) {
-                throw new Error('登录失败');
+                throw new Error("注册失败");
             }
             return response.json();
         },
         {
             manual: true,
             onSuccess: (data) => {
-                console.log('登录成功:', data);
-                setIsLoggedIn(true);
-                setToken(data.token); // 保存token
-                setResponseMessage('登录成功');
+                message.success("注册成功");
+                setResponseMessage("注册成功");
             },
             onError: (error) => {
-                console.error('登录错误:', error);
-                setResponseMessage(error.message || '登录失败');
+                message.error("注册失败: " + error.message);
+                setResponseMessage(error.message || "注册失败");
             },
         }
     );
 
-    // 更改用户名请求
-    const { run: updateUsername, loading: updateLoading } = useRequest(
-        async () => {
-            const response = await fetch(`${API_BASE_URL}/user/update`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,  // 使用token进行身份验证
-                },
-                body: JSON.stringify({ username: newUsername }),
-            });
-            if (!response.ok) {
-                throw new Error('用户名修改失败');
-            }
-            return response.json();
-        },
-        {
-            manual: true,
-            onSuccess: (data) => {
-                console.log('用户名修改成功:', data);
-                setResponseMessage('用户名修改成功');
-            },
-            onError: (error) => {
-                console.error('修改用户名错误:', error);
-                setResponseMessage(error.message || '用户名修改失败');
-            },
-        }
-    );
-
-    const handleLoginSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        loginUser(); // 触发登录请求
-    };
-
-    const handleUsernameChangeSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        updateUsername(); // 触发用户名更改请求
+    const onFinish = (values: { username: string; password: string; email: string }) => {
+        registerUser(values);
     };
 
     return (
-        <div className="login-container">
-            <h2 className="login-title">登录</h2>
-            <form className="login-form" onSubmit={handleLoginSubmit}>
-                <div>
-                    <label className="login-label">邮箱:</label>
-                    <input
-                        className="login-input"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="login-label">密码:</label>
-                    <input
-                        className="login-input"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button className="login-button" type="submit" disabled={loginLoading}>
-                    {loginLoading ? '登录中...' : '登录'}
-                </button>
-            </form>
+        <div className="register-container">
+            <h2 className="register-title">注册中心</h2>
+            <Form
+                name="register"
+                layout="vertical"
+                onFinish={onFinish}
+                style={{
+                    maxWidth: "400px",
+                    margin: "0 auto",
+                    padding: "20px",
+                    backgroundColor: "#fff",
+                    borderRadius: "8px",
+                }}
+            >
+                <Form.Item
+                    label="用户名"
+                    name="username"
+                    rules={[
+                        { required: true, message: "请输入用户名!" },
+                        { max: 80, message: "用户名不能超过80个字符!" },
+                    ]}
+                >
+                    <Input placeholder="输入用户名" maxLength={81} />
+                </Form.Item>
 
-            {responseMessage && <p>{responseMessage}</p>}
+                <Form.Item
+                    label="密码"
+                    name="password"
+                    rules={[
+                        { required: true, message: "请输入密码!" },
+                        { max: 20, message: "密码不能超过20个字符!" },
+                    ]}
+                >
+                    <Input.Password placeholder="输入密码" maxLength={21} />
+                </Form.Item>
 
-            {isLoggedIn && (
-                <div>
-                    <h3>更改用户名</h3>
-                    <form onSubmit={handleUsernameChangeSubmit}>
-                        <div>
-                            <label className="login-label">新用户名:</label>
-                            <input
-                                className="login-input"
-                                type="text"
-                                value={newUsername}
-                                onChange={(e) => setNewUsername(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <button className="login-button" type="submit" disabled={updateLoading}>
-                            {updateLoading ? '更改中...' : '更改用户名'}
-                        </button>
-                    </form>
-                </div>
-            )}
+                <Form.Item
+                    label="确认密码"
+                    name="confirmPassword"
+                    dependencies={["password"]}
+                    rules={[
+                        { required: true, message: "请确认密码!" },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (
+                                    !value ||
+                                    getFieldValue("password") === value
+                                ) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(
+                                    new Error("两次输入的密码不匹配!")
+                                );
+                            },
+                        }),
+                    ]}
+                >
+                    <Input.Password placeholder="确认密码" maxLength={21} />
+                </Form.Item>
+
+                <Form.Item
+                    label="邮箱"
+                    name="email"
+                    rules={[
+                        { required: true, message: "请输入邮箱!" },
+                        { type: "email", message: "请输入有效的邮箱!" },
+                    ]}
+                >
+                    <Input placeholder="输入邮箱" />
+                </Form.Item>
+
+                <Form.Item>
+                    <button
+                        className="custom-register-button"
+                        type="submit"
+                        disabled={registerLoading}
+                    >
+                        {registerLoading ? "注册中..." : "注册"}
+                    </button>
+                </Form.Item>
+
+                {responseMessage && <p>{responseMessage}</p>}
+            </Form>
         </div>
     );
 };
 
-export default Login;
+export default Register;
