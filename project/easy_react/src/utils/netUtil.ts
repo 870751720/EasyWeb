@@ -1,19 +1,20 @@
+import { API_BASE_URL } from "./config";
 
-const API_BASE_URL = 'http://123.207.50.78';
 const getAccessToken = () => localStorage.getItem('accessToken');
-const getLanguage = () => localStorage.getItem('language') || 'zh';
-
 
 export const setAccessToken = (token: string) => localStorage.setItem('accessToken', token);
 
 export const setLanguage = (language: string) => localStorage.setItem('language', language);
 
+export const getLanguage = () => localStorage.getItem('language') || 'zh';
+
 export const fetchPost = async (urlPath: string, bodyData: Record<string, any>) => {
     const accessToken = getAccessToken();
     let defaultHeaders: Record<string, string> = {
-        'Language': getLanguage(),
+        'Accept-Language': getLanguage(),
         'Content-Type': 'application/json',
     };
+    console.log(getLanguage());
     if (accessToken) {
         defaultHeaders['Authorization'] = accessToken;
     }
@@ -28,7 +29,7 @@ export const fetchPost = async (urlPath: string, bodyData: Record<string, any>) 
 export const fetchGet = async (urlPath: string, queryParams: Record<string, any> = {}) => {
     const accessToken = getAccessToken();
     let defaultHeaders: Record<string, string> = {
-        'Language': getLanguage(),
+        'Accept-Language': getLanguage(),
     };
     if (accessToken) {
         defaultHeaders['Authorization'] = accessToken;

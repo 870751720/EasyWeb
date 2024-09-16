@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRequest } from 'ahooks';
-import { fetchPost } from '../utils/netUtil';
+import { fetchPost, setAccessToken } from '../utils/netUtil';
 import './Login.css';
 
 const Login: React.FC = () => {
@@ -19,12 +19,11 @@ const Login: React.FC = () => {
         {
             manual: true,
             onSuccess: (data) => {
-                console.log('登录成功:', data);
-                setResponseMessage('登录成功');
-            },
-            onError: (error) => {
-                console.error('登录错误:', error);
-                setResponseMessage(error.message || '登录失败');
+                if (data.status === 200){
+                    setAccessToken(data.token);
+                    setResponseMessage('登录成功');
+                }
+                else setResponseMessage(data.error);
             },
         }
     );
