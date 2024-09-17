@@ -15,6 +15,7 @@ import {
     Input,
     Select,
 } from "antd";
+import _l from "../utils/i18n";
 
 const PAGE_SIZE = 10;
 
@@ -61,28 +62,29 @@ const UserManagement: React.FC = () => {
         {
             manual: true,
             onSuccess: () => {
-                message.success("用户新增成功");
+                message.success(_l.TID_MANAGE_USER_ADD_SUCCESS);
                 fetchUsersCountRequest();
                 fetchUsersRequest(currentPage);
                 setIsModalVisible(false);
             },
             onError: () => {
-                message.error("新增用户失败");
+                message.error(_l.TID_MANAGE_USER_ADD_FAILED);
             },
         }
     );
 
     const { run: deleteUserRequest } = useRequest(
-        (userData: User) => fetchPost("/user/delete", {"user_id": userData.user_id}),
+        (userData: User) =>
+            fetchPost("/user/delete", { user_id: userData.user_id }),
         {
             manual: true,
             onSuccess: () => {
-                message.success("用户删除成功");
+                message.success(_l.TID_MANAGE_USER_REMOVE_SUCCESS);
                 fetchUsersCountRequest();
                 fetchUsersRequest(currentPage);
             },
             onError: () => {
-                message.error("删除用户失败");
+                message.error(_l.TID_MANAGE_USER_REMOVE_FAILED);
             },
         }
     );
@@ -123,7 +125,7 @@ const UserManagement: React.FC = () => {
                 onClick={showAddUserModal}
                 style={{ marginBottom: "16px" }}
             >
-                新增用户
+                {_l.TID_MANAGE_NEW_USER_BTN}
             </Button>
 
             <List
@@ -142,16 +144,18 @@ const UserManagement: React.FC = () => {
                                         type="primary"
                                         onClick={() => handleEdit(user)}
                                     >
-                                        编辑
+                                        {_l.TID_MANAGE_USER_INFO_EDIT}
                                     </Button>
                                     <Popconfirm
-                                        title="确定删除这个用户吗？"
+                                        title={
+                                            _l.TID_MANAGE_USER_INFO_REMOVE_CONFIRM
+                                        }
                                         onConfirm={() => handleDelete(user)}
-                                        okText="是"
-                                        cancelText="否"
+                                        okText={_l.TID_COMMON_CONFIRM}
+                                        cancelText={_l.TID_COMMON_CANCEL}
                                     >
                                         <Button type="primary" danger>
-                                            删除
+                                            {_l.TID_MANAGE_USER_INFO_REMOVE}
                                         </Button>
                                     </Popconfirm>
                                 </Space>
@@ -169,11 +173,11 @@ const UserManagement: React.FC = () => {
                                     {user.username}
                                 </Typography.Text>
                                 <Typography.Text type="secondary">
-                                    角色: {user.role}
+                                    {_l.TID_MANAGE_USER_ROLE}: {user.role}
                                 </Typography.Text>
                             </div>
                             <Typography.Text type="secondary">
-                                邮箱: {user.email}
+                                {_l.TID_REGISTER_EMAIL}: {user.email}
                             </Typography.Text>
                         </Card>
                     </List.Item>
@@ -198,7 +202,7 @@ const UserManagement: React.FC = () => {
                                     textDecoration: "underline",
                                 }}
                             >
-                                上一页
+                                {_l.TID_COMMON_LAST_PAGE}
                             </button>
                         );
                     }
@@ -213,7 +217,7 @@ const UserManagement: React.FC = () => {
                                     textDecoration: "underline",
                                 }}
                             >
-                                下一页
+                                {_l.TID_COMMON_NEXT_PAGE}
                             </button>
                         );
                     }
@@ -223,7 +227,7 @@ const UserManagement: React.FC = () => {
             />
 
             <Modal
-                title="新增用户"
+                title={_l.TID_MANAGE_NEW_USER_BTN}
                 open={isModalVisible}
                 onOk={handleAddUser}
                 onCancel={() => setIsModalVisible(false)}
@@ -231,38 +235,66 @@ const UserManagement: React.FC = () => {
                 <Form form={form} layout="vertical">
                     <Form.Item
                         name="username"
-                        label="用户名"
-                        rules={[{ required: true, message: "请输入用户名" }]}
+                        label={_l.TID_REGISTER_NAME}
+                        rules={[
+                            {
+                                required: true,
+                                message: _l.TID_REGISTER_NAME_TIP,
+                            },
+                        ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         name="email"
-                        label="邮箱"
+                        label={_l.TID_REGISTER_EMAIL}
                         rules={[
-                            { required: true, message: "请输入邮箱" },
-                            { type: "email", message: "请输入有效的邮箱地址" },
+                            {
+                                required: true,
+                                message: _l.TID_REGISTER_EMAIL_TIP,
+                            },
+                            {
+                                type: "email",
+                                message: _l.TID_REGISTER_EMAIL_FORMAT,
+                            },
                         ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         name="password"
-                        label="密码"
-                        rules={[{ required: true, message: "请输入密码" }]}
+                        label={_l.TID_REGISTER_PASSWORD}
+                        rules={[
+                            {
+                                required: true,
+                                message: _l.TID_REGISTER_PASSWORD_TIP,
+                            },
+                        ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         name="role"
-                        label="角色"
-                        rules={[{ required: true, message: "请选择角色" }]}
+                        label={_l.TID_MANAGE_USER_ROLE}
+                        rules={[
+                            {
+                                required: true,
+                                message: _l.TID_MANAGE_USER_ROLE_TIP,
+                            },
+                        ]}
                     >
                         <Select>
-                            <Select.Option value="user">用户</Select.Option>
-                            <Select.Option value="admin">管理员</Select.Option>
+                            <Select.Option value="guest">
+                                {_l.TID_MANAGE_USER_ROLE_GUEST}
+                            </Select.Option>
+                            <Select.Option value="user">
+                                {_l.TID_MANAGE_USER_ROLE_USER}
+                            </Select.Option>
+                            <Select.Option value="admin">
+                                {_l.TID_MANAGE_USER_ROLE_ADMIN}
+                            </Select.Option>
                             <Select.Option value="superadmin">
-                                超级管理员
+                                {_l.TID_MANAGE_USER_ROLE_SUPER}
                             </Select.Option>
                         </Select>
                     </Form.Item>
