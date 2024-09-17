@@ -92,7 +92,7 @@ const UserManagement: React.FC = () => {
     useEffect(() => {
         fetchUsersCountRequest();
         fetchUsersRequest(1);
-    }, []);
+    }, [fetchUsersCountRequest, fetchUsersRequest]);
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
