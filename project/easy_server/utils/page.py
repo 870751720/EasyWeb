@@ -1,6 +1,5 @@
 import os
-from flask import jsonify, send_from_directory, request, g
-from utils.localize import _l
+from flask import send_from_directory, request, g
 
 
 def init_page(app):
