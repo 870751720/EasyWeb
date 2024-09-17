@@ -9,7 +9,7 @@ export const setLanguage = (language: string) => localStorage.setItem('language'
 
 export const getLanguage = () => localStorage.getItem('language') || 'zh';
 
-export const fetchPost = async (urlPath: string, bodyData: Record<string, any>) => {
+export const fetchPost = async (urlPath: string, bodyData: Record<string, any> = {}) => {
     const accessToken = getAccessToken();
     let defaultHeaders: Record<string, string> = {
         'Accept-Language': getLanguage(),

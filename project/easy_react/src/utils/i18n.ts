@@ -4,7 +4,8 @@ const translations = {
     zh: {
         TID_HOME: '首页',
         TID_ADMIN: '后台',
-        TID_SWITCH_LANGUAGE: '英文',
+        TID_SWITCH_LANGUAGE: '语言',
+        TID_SWITCH_LANGUAGE_NOW: '简体中文',
         TID_LOGIN: '登录',
         TID_LOGIN_TITLE: '登录',
         TID_LOGIN_EMAIL: '邮箱',
@@ -47,7 +48,8 @@ const translations = {
     en: {
         TID_HOME: 'Home',
         TID_ADMIN: 'Admin',
-        TID_SWITCH_LANGUAGE: 'Chinese',
+        TID_SWITCH_LANGUAGE: 'Language',
+        TID_SWITCH_LANGUAGE_NOW: 'English',
         TID_LOGIN: 'Login',
         TID_LOGIN_TITLE: 'Login',
         TID_LOGIN_EMAIL: 'Email',
@@ -90,7 +92,8 @@ const translations = {
     jp: {
         TID_HOME: 'ホーム',
         TID_ADMIN: '管理者',
-        TID_SWITCH_LANGUAGE: '日本語',
+        TID_SWITCH_LANGUAGE: '言語',
+        TID_SWITCH_LANGUAGE_NOW: '日本語',
         TID_LOGIN: 'ログイン',
         TID_LOGIN_TITLE: 'ログイン',
         TID_LOGIN_EMAIL: 'メールアドレス',

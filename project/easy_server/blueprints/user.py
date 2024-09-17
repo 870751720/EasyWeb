@@ -93,7 +93,7 @@ def get_user_info():
 	return jsonify({"user_info": user_info, "status": 200})
 
 
-@user_bp.route("/self_info", methods=["POST"])
+@user_bp.route("/self_info", methods=["GET"])
 @token_and_roles_required(["admin", "superadmin", "user"])
 def get_self_info(current_user):
 	user_id = current_user.id
