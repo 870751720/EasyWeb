@@ -38,7 +38,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="login-container">
+        <div>
             <Form
                 name="login"
                 layout="vertical"
@@ -92,12 +92,12 @@ const Login: React.FC = () => {
                 </Form.Item>
                 <div className="register-link-container">
                     <span>{_l.TID_LOGIN_NO_ACCOUNT}</span>
-                    <a
+                    <button
                         className="register-link"
                         onClick={() => navigate("/register")}
                     >
                         {_l.TID_REGISTER}
-                    </a>
+                    </button>
                 </div>
             </Form>
         </div>

@@ -37,7 +37,7 @@
     z-index: -1;
 }
 
-.custom-login-button.charging::before { /* 当表单验证通过时开始充能 */
+.custom-login-button.charging::before {
     width: 100%;
 }
 
@@ -47,14 +47,21 @@
 }
 
 .register-link {
-    color: #0088ff;
-    text-decoration: none;
-    font-weight: bold;
-    margin-left: 5px;
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 14px;
+    text-decoration: underline;
     cursor: pointer;
+    padding: 0;
     transition: color 0.3s ease;
 }
 
 .register-link:hover {
     color: #0056b3;
+    text-decoration: none;
+}
+
+.register-link:focus {
+    outline: none;
 }

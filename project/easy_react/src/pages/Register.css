@@ -32,15 +32,36 @@
     left: 0;
     width: 0;
     height: 100%;
-    background: linear-gradient(to right, rgba(0, 136, 255, 0.2), rgba(0, 136, 255, 0.6), rgba(0, 136, 255, 1));
+    background: rgba(0, 136, 255, 1);
     transition: width 0.8s ease;
     z-index: -1;
 }
 
-.custom-register-button:hover::before {
+.custom-register-button.charging::before {
     width: 100%;
 }
 
-.custom-register-button:hover {
-    color: #fff;
+.login-link-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.login-link {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.login-link:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+.login-link:focus {
+    outline: none;
 }
