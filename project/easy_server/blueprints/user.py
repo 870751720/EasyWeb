@@ -40,8 +40,7 @@ def verify_registration():
 		new_user = User(username=info["username"], password=info["password"], email=email)
 		db.session.add(new_user)
 		db.session.commit()
-		token = get_token(new_user.id)
-		return jsonify({"message": _l("TID_USER_REGISTERED_SUCCESS"), "token": token, "status": 200})
+		return jsonify({"message": _l("TID_USER_REGISTERED_SUCCESS"), "status": 200})
 	else:
 		return jsonify({"error": _l("TID_USER_INVALID_CODE"), "status": 0})
 
