@@ -17,7 +17,7 @@ const Login: React.FC = () => {
             onSuccess: (data) => {
                 setAccessToken(data.token);
                 message.success(_l.TID_LOGIN_SUCCESS);
-                navigate("/home");
+                navigate("/");
                 window.location.reload();
             },
             onError: (error) => {
