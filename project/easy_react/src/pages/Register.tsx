@@ -8,13 +8,7 @@ const Register: React.FC = () => {
     const [responseMessage, setResponseMessage] = useState("");
 
     const { run: registerUser, loading: registerLoading } = useRequest(
-        async (values) => {
-            const response = await fetchPost("/user/register", values);
-            if (!response.ok) {
-                throw new Error("注册失败");
-            }
-            return response.json();
-        },
+        (values) => fetchPost("/user/register", values),
         {
             manual: true,
             onSuccess: (data) => {

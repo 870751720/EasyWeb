@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './Admin.css';
-import { useRequest } from 'ahooks';
-import { fetchPost } from '../utils/netUtil';
+import React, { useState } from "react";
+import "./Admin.css";
+import { useRequest } from "ahooks";
+import { fetchPost } from "../utils/netUtil";
 
 const Admin: React.FC = () => {
     interface User {
@@ -11,30 +11,24 @@ const Admin: React.FC = () => {
     }
 
     const [users, setUsers] = useState<User[]>([]);
-    const [responseMessage, setResponseMessage] = useState('');
+    const [responseMessage, setResponseMessage] = useState("");
 
     const { run: fetchUsersRequest, loading: fetchLoading } = useRequest(
-        async () => {
-            const response = await fetchPost('/user/users', {
+        () =>
+            fetchPost("/user/users", {
                 page: 1,
                 page_size: 10,
-            });
-            if (!response.ok) {
-                throw new Error('获取用户信息失败');
-            }
-            console.log('用户信息获取成功:', response);
-            return response.json();
-        },
+            }),
         {
             manual: true,
             onSuccess: (data) => {
-                console.log('用户信息获取成功:', data);
+                console.log("用户信息获取成功:", data);
                 setUsers(data.users);
-                setResponseMessage('用户信息获取成功');
+                setResponseMessage("用户信息获取成功");
             },
             onError: (error) => {
-                console.error('获取用户信息错误:', error);
-                setResponseMessage(error.message || '获取用户信息失败');
+                console.error("获取用户信息错误:", error);
+                setResponseMessage(error.message || "获取用户信息失败");
             },
         }
     );
@@ -45,7 +39,7 @@ const Admin: React.FC = () => {
 
             {/* 显示用户信息的按钮 */}
             <button onClick={fetchUsersRequest} disabled={fetchLoading}>
-                {fetchLoading ? '加载中...' : '查看用户信息'}
+                {fetchLoading ? "加载中..." : "查看用户信息"}
             </button>
 
             {/* 错误或成功提示 */}
@@ -57,7 +51,8 @@ const Admin: React.FC = () => {
                     <ul>
                         {users.map((user: User) => (
                             <li key={user.user_id}>
-                                用户ID: {user.user_id}, 用户名: {user.username}, 邮箱: {user.email}
+                                用户ID: {user.user_id}, 用户名: {user.username},
+                                邮箱: {user.email}
                             </li>
                         ))}
                     </ul>

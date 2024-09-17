@@ -93,6 +93,24 @@ def get_user_info():
 	return jsonify({"user_info": user_info, "status": 200})
 
 
+@user_bp.route("/self_info", methods=["POST"])
+@token_and_roles_required(["admin", "superadmin", "user"])
+def get_self_info(current_user):
+	user_id = current_user.id
+	user = User.query.get(user_id)
+	if not user:
+		return jsonify({"error": _l("TID_USER_NOT_FOUND"), "status": 1})
+
+	user_info = {
+		"user_id": user.id,
+		"username": user.username,
+		"email": user.email,
+		"role": user.role,
+	}
+
+	return jsonify({"user_info": user_info, "status": 200})
+
+
 @user_bp.route("/update", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin", "user"])
 def update_user(current_user):

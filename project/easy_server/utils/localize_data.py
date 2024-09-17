@@ -19,6 +19,10 @@ localize_info = {
 		"TID_INIT_PROJECT_MIGRATIONS_SUCCESS": "Migrations run successfully",
 		"TID_PAGE_NOT_FOUND": "Page not found",
 		"TID_PAGE_SERVER_ERROR": "Internal server error",
+		"TID_AUTH_NO_TOKEN": "Token is missing",
+		"TID_AUTH_EXPIRED_TOKEN": "Token has expired",
+		"TID_AUTH_INVALID_TOKEN": "Invalid token",
+		"TID_AUTH_NO_PERMISSION": "You do not have permission to perform this action",
 	},
 	"ch": {
 		"TID_USER_INFO_NEED": "邮箱，用户名和密码是必填项",
@@ -38,5 +42,9 @@ localize_info = {
 		"TID_INIT_PROJECT_MIGRATIONS_SUCCESS": "迁移成功",
 		"TID_PAGE_NOT_FOUND": "页面不存在",
 		"TID_PAGE_SERVER_ERROR": "内部服务器错误",
+		"TID_AUTH_NO_TOKEN": "请您先登录",
+		"TID_AUTH_EXPIRED_TOKEN": "登录已过期, 请重新登录",
+		"TID_AUTH_INVALID_TOKEN": "非法操作, 停下",
+		"TID_AUTH_NO_PERMISSION": "您没有权限执行此操作",
 	}
 }

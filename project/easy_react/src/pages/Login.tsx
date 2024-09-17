@@ -9,13 +9,7 @@ const Login: React.FC = () => {
     const [responseMessage, setResponseMessage] = useState('');
 
     const { run: loginUser, loading: loginLoading } = useRequest(
-        async () => {
-            const response = await fetchPost('/user/login', { email, password });
-            if (!response.ok) {
-                throw new Error('登录失败');
-            }
-            return response.json();
-        },
+        () => fetchPost('/user/login', { email, password }),
         {
             manual: true,
             onSuccess: (data) => {

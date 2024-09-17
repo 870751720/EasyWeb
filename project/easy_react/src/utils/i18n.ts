@@ -2,16 +2,16 @@ import { getLanguage } from "./netUtil";
 
 const translations = {
     zh: {
-        home: '首页',
-        login: '登录',
-        admin: '后台',
-        switch_language: 'English',
+        TID_HOME: '首页',
+        TID_LOGIN: '登录',
+        TID_ADMIN: '后台',
+        TID_SWITCH_LANGUAGE: 'English',
     },
     en: {
-        home: 'Home',
-        login: 'Login',
-        admin: 'Admin',
-        switch_language: '中文',
+        TID_HOME: 'Home',
+        TID_LOGIN: 'Login',
+        TID_ADMIN: 'Admin',
+        TID_SWITCH_LANGUAGE: '中文',
     }
 };
 

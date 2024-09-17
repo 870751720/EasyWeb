@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 from flask import request, jsonify, current_app
 from db.user_db import User
+from utils.localize import _l
 
 
 def token_and_roles_required(allowed_roles=None):
@@ -13,18 +14,18 @@ def token_and_roles_required(allowed_roles=None):
 			if "Authorization" in request.headers:
 				token = request.headers["Authorization"]
 			if not token:
-				return jsonify({"error": "Token is missing", "status": -1})
+				return jsonify({"error": _l("TID_AUTH_NO_TOKEN"), "status": -1})
 
 			try:
 				data = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
 				current_user = User.query.filter_by(id=data["user_id"]).first()
 			except jwt.ExpiredSignatureError:
-				return jsonify({"error": "Token has expired", "status": -2})
+				return jsonify({"error": _l("TID_AUTH_EXPIRED_TOKEN"), "status": -2})
 			except jwt.InvalidTokenError:
-				return jsonify({"error": "Invalid token", "status": -3})
+				return jsonify({"error": _l("TID_AUTH_INVALID_TOKEN"), "status": -3})
 
 			if allowed_roles and current_user.role not in allowed_roles:
-				return jsonify({"error": "You do not have permission to perform this action", "status": -4})
+				return jsonify({"error": _l("TID_AUTH_NO_PERMISSION"), "status": -4})
 
 			return f(current_user, *args, **kwargs)
 		return decorated

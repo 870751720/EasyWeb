@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "./config";
+import { message } from 'antd';
 
 const getAccessToken = () => localStorage.getItem('accessToken');
 
@@ -14,7 +15,6 @@ export const fetchPost = async (urlPath: string, bodyData: Record<string, any>) 
         'Accept-Language': getLanguage(),
         'Content-Type': 'application/json',
     };
-    console.log(getLanguage());
     if (accessToken) {
         defaultHeaders['Authorization'] = accessToken;
     }
@@ -23,7 +23,15 @@ export const fetchPost = async (urlPath: string, bodyData: Record<string, any>) 
         headers: defaultHeaders,
         body: JSON.stringify(bodyData),
     });
-    return response;
+    if (!response.ok) {
+        throw new Error('Error response from server');
+    }
+    let data = await response.json();
+    if (data.status !== 200) {
+        message.error(data.error);
+        throw new Error('Error response from server');
+    }
+    return data;
 };
 
 export const fetchGet = async (urlPath: string, queryParams: Record<string, any> = {}) => {
@@ -46,5 +54,13 @@ export const fetchGet = async (urlPath: string, queryParams: Record<string, any>
         headers: defaultHeaders,
     });
 
-    return response;
+    if (!response.ok) {
+        throw new Error('Error response from server');
+    }
+    let data = await response.json();
+    if (data.status !== 200) {
+        message.error(data.error);
+        throw new Error('Error response from server');
+    }
+    return data;
 };
