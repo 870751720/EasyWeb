@@ -15,11 +15,3 @@ def init_page(app):
 		if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
 			return send_from_directory(app.static_folder, path)
 		return send_from_directory(app.static_folder, "index.html")
-
-	@app.errorhandler(404)
-	def handle_not_found_error(error):
-		return jsonify({"error": _l("TID_PAGE_NOT_FOUND"), "status": 404})
-
-	@app.errorhandler(500)
-	def handle_internal_error(error):
-		return jsonify({"error": _l("TID_PAGE_SERVER_ERROR"), "status": 500})

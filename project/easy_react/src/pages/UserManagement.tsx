@@ -32,6 +32,7 @@ const UserManagement: React.FC = () => {
     const [totalUsers, setTotalUsers] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
     const [form] = Form.useForm();
 
     const { run: fetchUsersCountRequest } = useRequest(
@@ -67,8 +68,24 @@ const UserManagement: React.FC = () => {
                 fetchUsersRequest(currentPage);
                 setIsModalVisible(false);
             },
-            onError: () => {
-                message.error(_l.TID_MANAGE_USER_ADD_FAILED);
+            onError: (error) => {
+                message.error(error.message);
+            },
+        }
+    );
+
+    const { run: updateUserRequest } = useRequest(
+        (userData: User) => fetchPost("/user/update", userData),
+        {
+            manual: true,
+            onSuccess: () => {
+                message.success(_l.TID_MANAGE_USER_EDIT_SUCCESS);
+                fetchUsersCountRequest();
+                fetchUsersRequest(currentPage);
+                setIsModalVisible(false);
+            },
+            onError: (error) => {
+                message.error(error.message);
             },
         }
     );
@@ -100,16 +117,25 @@ const UserManagement: React.FC = () => {
     };
 
     const handleEdit = (user: User) => {
-        message.info(`编辑用户：${user.username}`);
-        // 在这里实现编辑功能
+        setIsEditing(true);
+        form.setFieldsValue(user);
+        setIsModalVisible(true);
     };
 
     const handleDelete = (user: User) => {
         deleteUserRequest(user);
     };
 
-    const showAddUserModal = () => {
+    const handleAdd = () => {
+        setIsEditing(false);
+        form.resetFields();
         setIsModalVisible(true);
+    };
+
+    const handleUpdateUser = () => {
+        form.validateFields().then((values) => {
+            updateUserRequest(values);
+        });
     };
 
     const handleAddUser = () => {
@@ -122,7 +148,7 @@ const UserManagement: React.FC = () => {
         <div style={{ padding: "16px" }}>
             <Button
                 type="primary"
-                onClick={showAddUserModal}
+                onClick={handleAdd}
                 style={{ marginBottom: "16px" }}
             >
                 {_l.TID_MANAGE_NEW_USER_BTN}
@@ -227,12 +253,29 @@ const UserManagement: React.FC = () => {
             />
 
             <Modal
-                title={_l.TID_MANAGE_NEW_USER_BTN}
+                title={
+                    isEditing
+                        ? _l.TID_MANAGE_EDIT_USER_BTN
+                        : _l.TID_MANAGE_NEW_USER_BTN
+                }
                 open={isModalVisible}
-                onOk={handleAddUser}
+                onOk={isEditing ? handleUpdateUser : handleAddUser}
                 onCancel={() => setIsModalVisible(false)}
             >
                 <Form form={form} layout="vertical">
+                    {isEditing && (
+                        <Form.Item
+                            name="user_id"
+                            label="id"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    )}
                     <Form.Item
                         name="username"
                         label={_l.TID_REGISTER_NAME}
@@ -261,18 +304,20 @@ const UserManagement: React.FC = () => {
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        name="password"
-                        label={_l.TID_REGISTER_PASSWORD}
-                        rules={[
-                            {
-                                required: true,
-                                message: _l.TID_REGISTER_PASSWORD_TIP,
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
+                    {!isEditing && (
+                        <Form.Item
+                            name="password"
+                            label={_l.TID_REGISTER_PASSWORD}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: _l.TID_REGISTER_PASSWORD_TIP,
+                                },
+                            ]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+                    )}
                     <Form.Item
                         name="role"
                         label={_l.TID_MANAGE_USER_ROLE}
