@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useRequest } from "ahooks";
 import { fetchPost, fetchGet } from "../utils/netUtil";
-import { List, Pagination, Card, Button, Popconfirm, message, Typography, Space, Modal, Form, Input, Select } from "antd";
+import {
+    List,
+    Pagination,
+    Card,
+    Button,
+    Popconfirm,
+    message,
+    Typography,
+    Space,
+    Modal,
+    Form,
+    Input,
+    Select,
+} from "antd";
 
 const PAGE_SIZE = 10;
 
@@ -10,6 +23,7 @@ const UserManagement: React.FC = () => {
         user_id: number;
         username: string;
         email: string;
+        password: string;
         role: string;
     }
 
@@ -43,7 +57,7 @@ const UserManagement: React.FC = () => {
     );
 
     const { run: addUserRequest } = useRequest(
-        (userData: User) => fetchPost("/user/add_user", userData),
+        (userData: User) => fetchPost("/user/add", userData),
         {
             manual: true,
             onSuccess: () => {
@@ -54,7 +68,22 @@ const UserManagement: React.FC = () => {
             },
             onError: () => {
                 message.error("新增用户失败");
-            }
+            },
+        }
+    );
+
+    const { run: deleteUserRequest } = useRequest(
+        (userData: User) => fetchPost("/user/delete", {"user_id": userData.user_id}),
+        {
+            manual: true,
+            onSuccess: () => {
+                message.success("用户删除成功");
+                fetchUsersCountRequest();
+                fetchUsersRequest(currentPage);
+            },
+            onError: () => {
+                message.error("删除用户失败");
+            },
         }
     );
 
@@ -74,8 +103,7 @@ const UserManagement: React.FC = () => {
     };
 
     const handleDelete = (user: User) => {
-        message.success(`用户 ${user.username} 已删除`);
-        // 在这里实现删除功能
+        deleteUserRequest(user);
     };
 
     const showAddUserModal = () => {
@@ -90,7 +118,11 @@ const UserManagement: React.FC = () => {
 
     return (
         <div style={{ padding: "16px" }}>
-            <Button type="primary" onClick={showAddUserModal} style={{ marginBottom: "16px" }}>
+            <Button
+                type="primary"
+                onClick={showAddUserModal}
+                style={{ marginBottom: "16px" }}
+            >
                 新增用户
             </Button>
 
@@ -133,10 +165,16 @@ const UserManagement: React.FC = () => {
                                     marginBottom: "8px",
                                 }}
                             >
-                                <Typography.Text strong>{user.username}</Typography.Text>
-                                <Typography.Text type="secondary">角色: {user.role}</Typography.Text>
+                                <Typography.Text strong>
+                                    {user.username}
+                                </Typography.Text>
+                                <Typography.Text type="secondary">
+                                    角色: {user.role}
+                                </Typography.Text>
                             </div>
-                            <Typography.Text type="secondary">邮箱: {user.email}</Typography.Text>
+                            <Typography.Text type="secondary">
+                                邮箱: {user.email}
+                            </Typography.Text>
                         </Card>
                     </List.Item>
                 )}
@@ -186,7 +224,7 @@ const UserManagement: React.FC = () => {
 
             <Modal
                 title="新增用户"
-                visible={isModalVisible}
+                open={isModalVisible}
                 onOk={handleAddUser}
                 onCancel={() => setIsModalVisible(false)}
             >
@@ -201,7 +239,17 @@ const UserManagement: React.FC = () => {
                     <Form.Item
                         name="email"
                         label="邮箱"
-                        rules={[{ required: true, message: "请输入邮箱" }, { type: 'email', message: '请输入有效的邮箱地址' }]}
+                        rules={[
+                            { required: true, message: "请输入邮箱" },
+                            { type: "email", message: "请输入有效的邮箱地址" },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        label="密码"
+                        rules={[{ required: true, message: "请输入密码" }]}
                     >
                         <Input />
                     </Form.Item>
@@ -211,8 +259,11 @@ const UserManagement: React.FC = () => {
                         rules={[{ required: true, message: "请选择角色" }]}
                     >
                         <Select>
-                            <Select.Option value="admin">管理员</Select.Option>
                             <Select.Option value="user">用户</Select.Option>
+                            <Select.Option value="admin">管理员</Select.Option>
+                            <Select.Option value="superadmin">
+                                超级管理员
+                            </Select.Option>
                         </Select>
                     </Form.Item>
                 </Form>

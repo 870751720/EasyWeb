@@ -13,7 +13,7 @@ const UserInfoCard: React.FC = () => {
   return (
     <div className="user-info-card-container">
       {userInfo ? (
-        <Card title="User Info" bordered={false} className="user-info-card">
+        <Card title={_l.TID_COMMON_USERINFO} bordered={false} className="user-info-card">
           <p>{_l.TID_REGISTER_NAME}: {userInfo.name}</p>
           <p>{_l.TID_REGISTER_EMAIL}: {userInfo.email}</p>
         </Card>

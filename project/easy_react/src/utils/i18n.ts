@@ -45,6 +45,7 @@ const translations = {
         TID_REGISTER_HAS_ACCOUNT: "已有账号? ",
         TID_REGISTER_EMAIL_CONFIRM: "请在邮箱确认",
         TID_COMMON_LOGOUT: "注销",
+        TID_COMMON_USERINFO: "用户信息",
     },
     en: {
         TID_HOME: 'Home',
@@ -90,6 +91,7 @@ const translations = {
         TID_REGISTER_HAS_ACCOUNT: "Has account? ",
         TID_REGISTER_EMAIL_CONFIRM: 'Please confirm email',
         TID_COMMON_LOGOUT: 'Logout',
+        TID_COMMON_USERINFO: 'User information',
     },
     jp: {
         TID_HOME: 'ホーム',
@@ -135,6 +137,7 @@ const translations = {
         TID_REGISTER_HAS_ACCOUNT: "アカウントがありません。 ",
         TID_REGISTER_EMAIL_CONFIRM: 'メールアドレスを確認してください',
         TID_COMMON_LOGOUT: 'ログアウト',
+        TID_COMMON_USERINFO: 'ユーザー情報',
     }
 };
 
