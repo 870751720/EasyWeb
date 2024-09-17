@@ -1,62 +1,105 @@
-import React, { useState } from 'react';
-import { useRequest } from 'ahooks';
-import { fetchPost, setAccessToken } from '../utils/netUtil';
-import './Login.css';
+import React, { useState } from "react";
+import { Form, Input, message } from "antd";
+import { useRequest } from "ahooks";
+import { fetchPost, setAccessToken } from "../utils/netUtil";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
+import _l from "../utils/i18n";
 
 const Login: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [responseMessage, setResponseMessage] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
+    const navigate = useNavigate();
 
     const { run: loginUser, loading: loginLoading } = useRequest(
-        () => fetchPost('/user/login', { email, password }),
+        (values) => fetchPost("/user/login", values),
         {
             manual: true,
             onSuccess: (data) => {
-                if (data.status === 200){
-                    setAccessToken(data.token);
-                    setResponseMessage('登录成功');
-                }
-                else setResponseMessage(data.error);
+                setAccessToken(data.token);
+                message.success(_l.TID_LOGIN_SUCCESS);
+                navigate("/home");
+            },
+            onError: (error) => {
+                message.error(_l.TID_LOGIN_FAILED + error.message);
             },
         }
     );
 
-    const handleLoginSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        loginUser();
+    const onFinish = (values: { email: string; password: string }) => {
+        loginUser(values);
+    };
+
+    const onFieldsChange = (_: any, allFields: any) => {
+        const isValid = allFields.every(
+            (field: { errors: any[]; value: any }) =>
+                field.errors.length === 0 && field.value
+        );
+        setIsFormValid(isValid);
     };
 
     return (
         <div className="login-container">
-            <h2 className="login-title">登录</h2>
-            <form className="login-form" onSubmit={handleLoginSubmit}>
-                <div>
-                    <label className="login-label">邮箱:</label>
-                    <input
-                        className="login-input"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="login-label">密码:</label>
-                    <input
-                        className="login-input"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button className="login-button" type="submit" disabled={loginLoading}>
-                    {loginLoading ? '登录中...' : '登录'}
-                </button>
-            </form>
+            <Form
+                name="login"
+                layout="vertical"
+                onFinish={onFinish}
+                onFieldsChange={onFieldsChange}
+                style={{
+                    maxWidth: "400px",
+                    margin: "0 auto",
+                    padding: "20px",
+                    backgroundColor: "#fff",
+                    borderRadius: "8px",
+                }}
+            >
+                <h2 className="login-title">{_l.TID_LOGIN_TITLE}</h2>
+                <Form.Item
+                    label={_l.TID_LOGIN_EMAIL}
+                    name="email"
+                    rules={[
+                        { required: true, message: _l.TID_LOGIN_EMAIL_PLZ },
+                        { type: "email", message: _l.TID_LOGIN_EMAIL_FORMAT },
+                    ]}
+                >
+                    <Input placeholder={_l.TID_LOGIN_EMAIL_TIP} />
+                </Form.Item>
 
-            {responseMessage && <p>{responseMessage}</p>}
+                <Form.Item
+                    label={_l.TID_LOGIN_PASSWORD}
+                    name="password"
+                    rules={[
+                        { required: true, message: _l.TID_LOGIN_PASSWORD_PLZ },
+                    ]}
+                >
+                    <Input.Password
+                        placeholder={_l.TID_LOGIN_PASSWORD_TIP}
+                        maxLength={21}
+                    />
+                </Form.Item>
+
+                <Form.Item>
+                    <button
+                        type="submit"
+                        disabled={loginLoading}
+                        className={`custom-login-button ${
+                            isFormValid ? "charging" : ""
+                        }`}
+                    >
+                        {loginLoading
+                            ? _l.TID_LOGIN_BTN_NAME_ING
+                            : _l.TID_LOGIN_BTN_NAME}
+                    </button>
+                </Form.Item>
+                <div className="register-link-container">
+                    <span>{_l.TID_LOGIN_NO_ACCOUNT}</span>
+                    <a
+                        className="register-link"
+                        onClick={() => navigate("/register")}
+                    >
+                        {_l.TID_REGISTER}
+                    </a>
+                </div>
+            </Form>
         </div>
     );
 };
