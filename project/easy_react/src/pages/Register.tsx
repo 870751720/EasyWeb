@@ -39,6 +39,7 @@ const Register: React.FC = () => {
                 if (intervalRef.current !== null) {
                     clearInterval(intervalRef.current);
                 }
+                window.location.reload();
             },
         }
     );

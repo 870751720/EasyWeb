@@ -28,7 +28,7 @@ export const fetchPost = async (urlPath: string, bodyData: Record<string, any> =
     }
     let data = await response.json();
     if (data.status !== 200) {
-        if (data.status < 0) {
+        if (data.status === -2) {
             message.error(data.error);
             window.location.reload();
         }
@@ -62,7 +62,7 @@ export const fetchGet = async (urlPath: string, queryParams: Record<string, any>
     }
     let data = await response.json();
     if (data.status !== 200) {
-        if (data.status < 0) {
+        if (data.status === -2) {
             message.error(data.error);
             window.location.reload();
         }

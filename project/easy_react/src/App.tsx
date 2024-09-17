@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import routes from './routes';
 import Header from './components/Head';
 
-
 const App: React.FC = () => {
     return (
         <Router>

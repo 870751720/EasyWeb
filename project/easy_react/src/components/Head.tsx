@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Select } from "antd";
+import { Select, Tooltip } from "antd";  // 引入 Tooltip 组件
 import { useRequest } from "ahooks";
-import { fetchPost } from "../utils/netUtil";
+import { fetchGet } from "../utils/netUtil";
 import "./Head.css";
 import _l from "../utils/i18n";
+import UserInfoCard from './UserInfoCard';  // 引入 UserInfoCard 组件
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../store/userSlice';
 
 const { Option } = Select;
 
 const Header = () => {
     const [language, setLanguage] = useState("zh");
     const [username, setUsername] = useState<string | null>(null);
+    const [role, setRole] = useState<string | null>(null);
+    const dispatch = useDispatch();
 
     const handleLanguageChange = (value: string) => {
         setLanguage(value);
@@ -23,17 +28,25 @@ const Header = () => {
         setLanguage(lang);
     }, []);
 
-    const { run: fetchUserInfo} = useRequest(
-        () => fetchPost("/user/self_info"),
+    const { run: fetchUserInfo } = useRequest(
+        () => fetchGet("/user/self_info"),
         {
             manual: true,
             onSuccess: (data) => {
-                if (data && data.username) {
-                    setUsername(data.username);
-                }
+                setUsername(data.user_info.username);
+                setRole(data.user_info.role);
+                dispatch(setUserInfo({
+                    name: data.user_info.username,
+                    email: data.user_info.email,
+                }));
             },
             onError: () => {
                 setUsername(null);
+                setRole(null);
+                dispatch(setUserInfo({
+                    name: "",
+                    email: ""
+                }));
             },
         }
     );
@@ -51,27 +64,42 @@ const Header = () => {
             }}
         >
             <nav>
-                <Link to="/" style={{ marginRight: "20px" }}>
-                    {_l.TID_HOME}
-                </Link>
-                {username ? (
-                    <span style={{ marginRight: "20px" }}>{username}</span>
-                ) : (
-                    <Link to="/login" style={{ marginRight: "20px" }}>
-                        {_l.TID_LOGIN}
-                    </Link>
-                )}
-                <Link to="/admin">{_l.TID_ADMIN}</Link>
-
                 <Select
                     value={language}
                     onChange={handleLanguageChange}
-                    style={{ width: 120, marginLeft: "20px" }}
+                    style={{ width: 120, marginLeft: "20px", marginRight: "20px" }}
                 >
                     <Option value="zh">中文</Option>
                     <Option value="en">English</Option>
                     <Option value="jp">日本語</Option>
                 </Select>
+                <Link to="/" style={{ marginRight: "20px" }}>
+                    {_l.TID_HOME}
+                </Link>
+                {(role === "superadmin" || role === "admin") && (
+                    <Link to="/admin" style={{ marginRight: "20px" }}>
+                        {_l.TID_ADMIN}
+                    </Link>
+                )}
+                {username ? (
+                    <Tooltip
+                        title={<UserInfoCard />}
+                        placement="bottom"
+                        mouseEnterDelay={0.3}
+                        color="#f9f9f9"
+                    >
+                        <span
+                            style={{ marginRight: "20px", position: "relative", cursor: 'pointer' }}
+                        >
+                            {username}
+                        </span>
+                    </Tooltip>
+                ) : (
+                    <Link to="/login" style={{ marginRight: "20px" }}>
+                        {_l.TID_LOGIN}
+                    </Link>
+                )}
+
             </nav>
         </header>
     );
