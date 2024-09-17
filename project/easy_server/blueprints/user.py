@@ -37,7 +37,7 @@ def verify_registration():
 	verification_code = request.args.get("code")
 	info = verify_code(email, verification_code)
 	if info:
-		new_user = User(username=info["username"], password=info["password"], email=email)
+		new_user = User(username=info["username"], password=info["password"], email=email, role="user")
 		db.session.add(new_user)
 		db.session.commit()
 		return jsonify({"message": _l("TID_USER_REGISTERED_SUCCESS"), "status": 200})
@@ -167,7 +167,7 @@ def	get_users(_):
 
 @user_bp.route("/delete", methods=["POST"])
 @token_and_roles_required(["superadmin"])
-def delete_user_route(_):
+def delete_user(_):
 	data = request.json
 	user_id = data.get("user_id")
 
@@ -182,3 +182,23 @@ def delete_user_route(_):
 	db.session.commit()
 
 	return jsonify({"message": _l("TID_USER_DELETE_SUCCESS"), "status": 200})
+
+
+@user_bp.route("/add", methods=["POST"])
+@token_and_roles_required(["superadmin"])
+def add_user(_):
+	data = request.json
+	username = data.get("username")
+	password = data.get("password")
+	email = data.get("email")
+	role = data.get("role")
+
+	if not username or not password or not email or not role:
+		return jsonify({"error": _l("TID_USER_INFO_NEED"), "status": 0})
+
+	hashed_password = generate_password_hash(password)
+	new_user = User(username=username, password=hashed_password, email=email, role=role)
+	db.session.add(new_user)
+	db.session.commit()
+
+	return jsonify({"message": _l("TID_USER_ADD_SUCCESS"), "status": 200})

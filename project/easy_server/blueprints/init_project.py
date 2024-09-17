@@ -9,6 +9,7 @@ from utils.localize import _l
 init_project_bp = Blueprint("init_project", __name__)
 
 @init_project_bp.route("/create_tables", methods=["GET"])
+@token_and_roles_required(["superadmin"])
 def create_tables():
 	try:
 		db.drop_all()
