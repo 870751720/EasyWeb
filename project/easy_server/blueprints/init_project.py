@@ -40,13 +40,3 @@ def run_migrations():
 		return jsonify({"message": _l("TID_INIT_PROJECT_MIGRATIONS_SUCCESS"), "status": 200})
 	except Exception as e:
 		return jsonify({"error": str(e), "status": 0})
-
-
-@init_project_bp.route("/docker_logs", methods=["GET"])
-@token_and_roles_required(["superadmin"])
-def get_docker_logs(_):
-	try:
-		logs = subprocess.check_output(["docker-compose", "logs"], universal_newlines=True)
-		return jsonify({"logs": logs, "status": 200})
-	except subprocess.CalledProcessError as e:
-		return jsonify({"error": str(e), "status": 0})
