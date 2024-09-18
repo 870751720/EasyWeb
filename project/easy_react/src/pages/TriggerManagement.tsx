@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, message, Modal } from "antd";
+import { Button, message, Modal, Space } from "antd";
 import { useRequest } from "ahooks";
 import { fetchGet } from "../utils/netUtil";
 import _l from "../utils/i18n";
@@ -45,21 +45,21 @@ const TriggerManagement: React.FC = () => {
 
     return (
         <div style={{ padding: "16px" }}>
-            <Button
-                type="primary"
-                onClick={handleInitDatabase}
-                style={{ marginBottom: "16px" }}
-            >
-                {_l.TID_MANAGE_TRIGGER_INIT_DF}
-            </Button>
+            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+                <Button
+                    type="primary"
+                    onClick={handleInitDatabase}
+                >
+                    {_l.TID_MANAGE_TRIGGER_INIT_DF}
+                </Button>
 
-            <Button
-                type="default"
-                onClick={handleFetchLogs}
-                style={{ marginBottom: "16px" }}
-            >
-                {_l.TID_MANAGE_TRIGGER_DOCKER_LOGS}
-            </Button>
+                <Button
+                    type="default"
+                    onClick={handleFetchLogs}
+                >
+                    {_l.TID_MANAGE_TRIGGER_DOCKER_LOGS}
+                </Button>
+            </Space>
 
             <Modal
                 title={_l.TID_MANAGE_TRIGGER_DOCKER_LOGS}
