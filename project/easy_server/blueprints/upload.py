@@ -32,6 +32,7 @@ def update_user(_):
 	db.session.commit()
 	return jsonify({"message": _l("TID_UPLOAD_SUCCESS"), "status": 200})
 
+
 @upload_bp.route("/file/<filename>", methods=["GET"])
 def get_file(filename):
 	try:
@@ -39,9 +40,10 @@ def get_file(filename):
 	except FileNotFoundError:
 		return jsonify({"error": _l("TID_UPLOAD_FILE_NOT_FOUND"), "status": 404})
 
+
 @upload_bp.route("/delete", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin"])
-def delete_file():
+def delete_file(_):
 	data = request.get_json()
 	resource_id = data.get("id")
 
@@ -64,10 +66,12 @@ def delete_file():
 
 	return jsonify({"message": _l("TID_UPLOAD_DELETE_SUCCESS"), "status": 200})
 
+
 @upload_bp.route("/resources_count", methods=["GET"])
 def get_resources_count(_):
 	resources_count = Resource.query.count()
 	return jsonify({"resources_count": resources_count, "status": 200})
+
 
 @upload_bp.route("/resources", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin"])

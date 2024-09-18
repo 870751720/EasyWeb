@@ -72,3 +72,38 @@ export const fetchGet = async (urlPath: string, queryParams: Record<string, any>
     }
     return data;
 };
+
+export const fetchUpload = async (urlPath: string, file: File) => {
+    const accessToken = getAccessToken();
+    let defaultHeaders: Record<string, string> = {
+        'Accept-Language': getLanguage(),
+    };
+    if (accessToken) {
+        defaultHeaders['Authorization'] = accessToken;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE_URL}${urlPath}`, {
+        method: 'POST',
+        headers: defaultHeaders, // FormData 不需要 'Content-Type'，浏览器会自动设置
+        body: formData,
+    });
+
+    if (!response.ok) {
+        throw new Error('Error response from server');
+    }
+
+    const data = await response.json();
+    if (data.status !== 200) {
+        if (data.status === -2) {
+            message.error(data.error);
+            setAccessToken("");
+            window.location.reload();
+        }
+        throw new Error(data.error);
+    }
+
+    return data;
+};

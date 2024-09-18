@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Upload, message } from 'antd';
 import { useRequest } from 'ahooks';
-import { fetchGet, fetchPost } from "../utils/netUtil";
+import { fetchGet, fetchPost, fetchUpload } from "../utils/netUtil";
 
 const PAGE_SIZE = 10;
 
@@ -39,7 +39,7 @@ const ResManagement: React.FC = () => {
     );
 
     const { run: uploadResourceRequest } = useRequest(
-        (formData: FormData) => fetchPost("/upload/upload", formData),
+        (file: File) => fetchUpload("/upload/upload", file),
         {
             manual: true,
             onSuccess: () => {
@@ -48,8 +48,8 @@ const ResManagement: React.FC = () => {
                 fetchResourcesRequest(currentPage);
                 setIsModalVisible(false);
             },
-            onError: (error) => {
-                message.error(error.message);
+            onError: () => {
+                message.error("上传失败");
             },
         }
     );
@@ -83,11 +83,9 @@ const ResManagement: React.FC = () => {
         deleteResourceRequest(resourceId);
     };
 
-    const handleUpload = (file: any) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        uploadResourceRequest(formData);
-        return false; // 阻止自动上传
+    const handleUpload = (file: File) => {
+        uploadResourceRequest(file);
+        return false; // 阻止 Upload 组件自动上传
     };
 
     return (
@@ -125,7 +123,7 @@ const ResManagement: React.FC = () => {
                         </Upload>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" onClick={() => form.submit()}>上传</Button>
+                        <Button type="primary" onClick={form.submit}>提交</Button>
                     </Form.Item>
                 </Form>
             </Modal>
