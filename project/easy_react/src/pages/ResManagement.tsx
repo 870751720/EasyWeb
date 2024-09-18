@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Upload, message, Popconfirm } from "antd";
 import { useRequest } from "ahooks";
-import { fetchGet, fetchPost, fetchUpload } from "../utils/netUtil";
+import { fetchGet, fetchPost, fetchUpload, resUrl } from "../utils/netUtil";
 import _l from "../utils/i18n";
-
+import { isVideo } from "../utils/commonUtil";
 const PAGE_SIZE = 10;
 
 interface Resource {
@@ -122,7 +122,40 @@ const ResManagement: React.FC = () => {
                         dataIndex: "resource_id",
                         key: "resource_id",
                     },
-                    { title: _l.TID_COMMON_PATH, dataIndex: "path", key: "path" },
+                    {
+                        title: _l.TID_COMMON_PATH,
+                        dataIndex: "path",
+                        key: "path",
+                    },
+                    {
+                        title: _l.TID_COMMON_PREVIEW,
+                        key: "preview",
+                        render: (_, record) => {
+                            const resourceUrl = resUrl(record.path);
+
+                            return isVideo(resourceUrl) ? (
+                                <video
+                                    src={resourceUrl}
+                                    controls
+                                    style={{
+                                        width: 100,
+                                        height: 100,
+                                        objectFit: "cover",
+                                    }}
+                                />
+                            ) : (
+                                <img
+                                    src={resourceUrl}
+                                    alt="resource"
+                                    style={{
+                                        width: 100,
+                                        height: 100,
+                                        objectFit: "cover",
+                                    }}
+                                />
+                            );
+                        },
+                    },
                     {
                         title: _l.TID_COMMON_OPERATION,
                         render: (_, record) => (
@@ -157,7 +190,9 @@ const ResManagement: React.FC = () => {
                             <Button>{_l.TID_COMMON_CHOOSE}</Button>
                         </Upload>
                         {selectedFile && (
-                            <div>{_l.TID_COMMON_HAS_CHOOSE}: {selectedFile.name}</div>
+                            <div>
+                                {_l.TID_COMMON_HAS_CHOOSE}: {selectedFile.name}
+                            </div>
                         )}
                     </Form.Item>
                     <Form.Item>

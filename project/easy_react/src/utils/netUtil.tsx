@@ -9,6 +9,8 @@ export const setLanguage = (language: string) => localStorage.setItem('language'
 
 export const getLanguage = () => localStorage.getItem('language') || 'zh';
 
+export const resUrl = (urlPath: string) => `${API_BASE_URL}/upload/file/${urlPath}`;
+
 export const fetchPost = async (urlPath: string, bodyData: Record<string, any> = {}) => {
     const accessToken = getAccessToken();
     let defaultHeaders: Record<string, string> = {
