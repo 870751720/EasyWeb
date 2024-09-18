@@ -11,8 +11,8 @@ def create_app():
 
 	init_db(app)
 	init_mail(app)
-	init_page(app)
 	register_blueprints(app)
+	init_page(app)
 	CORS(app)
 
 	return app
