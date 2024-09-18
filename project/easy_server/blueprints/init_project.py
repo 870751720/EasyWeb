@@ -44,7 +44,7 @@ def run_migrations():
 
 @init_project_bp.route("/docker_logs", methods=["GET"])
 @token_and_roles_required(["superadmin"])
-def get_docker_logs():
+def get_docker_logs(_):
 	try:
 		logs = subprocess.check_output(["docker-compose", "logs"], universal_newlines=True)
 		return jsonify({"logs": logs, "status": 200})
