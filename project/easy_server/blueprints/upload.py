@@ -8,7 +8,6 @@ from werkzeug.utils import secure_filename
 
 upload_bp = Blueprint("upload", __name__)
 
-MAX_FILE_SIZE = 20 * 1024 * 1024
 UPLOAD_FOLDER = '/app/uploads'
 if not os.path.exists(UPLOAD_FOLDER):
 	os.makedirs(UPLOAD_FOLDER)
@@ -22,8 +21,6 @@ def update_user(_):
 	if file.filename == '':
 		return jsonify({"error": _l("TID_UPLOAD_NO_SELECTED_FILE"), "status": 1})
 
-	if request.content_length > MAX_FILE_SIZE:
-		return jsonify({"error": _l("TID_UPLOAD_FILE_SIZE_EXCEEDED"), "status": 2})
 	filename = secure_filename(file.filename)
 
 	file.save(os.path.join(UPLOAD_FOLDER, filename))
