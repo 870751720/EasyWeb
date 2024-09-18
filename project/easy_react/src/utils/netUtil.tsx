@@ -30,6 +30,7 @@ export const fetchPost = async (urlPath: string, bodyData: Record<string, any> =
     if (data.status !== 200) {
         if (data.status === -2) {
             message.error(data.error);
+            setAccessToken("");
             window.location.reload();
         }
         throw new Error(data.error);
@@ -64,6 +65,7 @@ export const fetchGet = async (urlPath: string, queryParams: Record<string, any>
     if (data.status !== 200) {
         if (data.status === -2) {
             message.error(data.error);
+            setAccessToken("");
             window.location.reload();
         }
         throw new Error(data.error);

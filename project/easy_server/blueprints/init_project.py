@@ -10,7 +10,7 @@ init_project_bp = Blueprint("init_project", __name__)
 
 @init_project_bp.route("/create_tables", methods=["GET"])
 @token_and_roles_required(["superadmin"])
-def create_tables():
+def create_tables(_):
 	try:
 		db.drop_all()
 		db.create_all()

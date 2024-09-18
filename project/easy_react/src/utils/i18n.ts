@@ -2,7 +2,7 @@ import { getLanguage } from "./netUtil";
 
 const translations = {
     zh: {
-        TID_HOME: '首页2',
+        TID_HOME: '首页',
         TID_ADMIN: '后台',
         TID_SWITCH_LANGUAGE: '语言',
         TID_SWITCH_LANGUAGE_NOW: '简体中文',
@@ -65,6 +65,10 @@ const translations = {
         TID_MANAGE_USER_ROLE_USER: "用户",
         TID_MANAGE_USER_ROLE_ADMIN: "管理员",
         TID_MANAGE_USER_ROLE_SUPER: "超级管理员",
+        TID_ADMIN_USER_MANAGEMENT: "用户管理",
+        TID_ADMIN_RESOURCE_MANAGEMENT: "资源管理",
+        TID_ADMIN_TRIGGER_MANAGEMENT: "触发器管理",
+        TID_MANAGE_TRIGGER_INIT_DF: "初始化数据库",
     },
     en: {
         TID_HOME: 'Home',
@@ -132,6 +136,10 @@ const translations = {
         TID_MANAGE_USER_ROLE_USER: 'User',
         TID_MANAGE_USER_ROLE_ADMIN: 'Admin',
         TID_MANAGE_USER_ROLE_SUPER: 'Super',
+        TID_ADMIN_USER_MANAGEMENT: 'User management',
+        TID_ADMIN_RESOURCE_MANAGEMENT: 'Resource management',
+        TID_ADMIN_TRIGGER_MANAGEMENT: 'Trigger management',
+        TID_MANAGE_TRIGGER_INIT_DF: 'Initialize database',
     },
     jp: {
         TID_HOME: 'ホーム',
@@ -198,6 +206,10 @@ const translations = {
         TID_MANAGE_USER_ROLE_GUEST: 'ゲスト',
         TID_MANAGE_USER_ROLE_USER: 'ユーザー',
         TID_MANAGE_USER_ROLE_ADMIN: '管理者',
+        TID_ADMIN_USER_MANAGEMENT: 'ユーザー管理',
+        TID_ADMIN_RESOURCE_MANAGEMENT: 'リソース管理',
+        TID_ADMIN_TRIGGER_MANAGEMENT: 'トリカゥ管理',
+        TID_MANAGE_TRIGGER_INIT_DF: 'データブースの初期化',
     }
 };
 
