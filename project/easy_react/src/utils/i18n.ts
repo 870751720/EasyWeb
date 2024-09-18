@@ -2,7 +2,7 @@ import { getLanguage } from "./netUtil";
 
 const translations = {
     zh: {
-        TID_HOME: '首页',
+        TID_HOME: '首页2',
         TID_ADMIN: '后台',
         TID_SWITCH_LANGUAGE: '语言',
         TID_SWITCH_LANGUAGE_NOW: '简体中文',
