@@ -10,6 +10,4 @@ def init_page(app):
 	@app.route("/", defaults={"path": ""})
 	@app.route("/<path:path>")
 	def serve_react_app(path):
-		if path != "":
-			return send_from_directory(app.static_folder, path)
 		return send_from_directory(app.static_folder, "index.html")
