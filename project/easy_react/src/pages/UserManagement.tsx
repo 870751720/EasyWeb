@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useRequest } from "ahooks";
 import { fetchPost, fetchGet } from "../utils/netUtil";
 import {
-    List,
     Pagination,
-    Card,
     Button,
     Popconfirm,
     message,
-    Typography,
-    Space,
     Modal,
     Form,
     Input,
     Select,
+    Table,
 } from "antd";
 import _l from "../utils/i18n";
 
@@ -153,61 +150,57 @@ const UserManagement: React.FC = () => {
             >
                 {_l.TID_MANAGE_NEW_USER_BTN}
             </Button>
-
-            <List
-                grid={{ gutter: 16, column: 1 }}
+            <Table
                 dataSource={users}
-                renderItem={(user: User) => (
-                    <List.Item>
-                        <Card
-                            style={{
-                                borderRadius: "8px",
-                                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                            }}
-                            extra={
-                                <Space>
-                                    <Button
-                                        type="primary"
-                                        onClick={() => handleEdit(user)}
-                                    >
-                                        {_l.TID_MANAGE_USER_INFO_EDIT}
+                rowKey="user_id"
+                pagination={{
+                    total: totalUsers,
+                    pageSize: PAGE_SIZE,
+                    onChange: handlePageChange,
+                }}
+                columns={[
+                    { title: _l.TID_COMMON_USER_ID, dataIndex: "user_id", key: "user_id" },
+                    {
+                        title: _l.TID_REGISTER_NAME,
+                        dataIndex: "username",
+                        key: "username",
+                    },
+                    {
+                        title: _l.TID_REGISTER_EMAIL,
+                        dataIndex: "email",
+                        key: "email",
+                    },
+                    {
+                        title: _l.TID_MANAGE_USER_ROLE,
+                        dataIndex: "role",
+                        key: "role",
+                    },
+                    {
+                        title: _l.TID_COMMON_OPERATION,
+                        render: (user: User) => (
+                            <>
+                                <Button
+                                    onClick={() => handleEdit(user)}
+                                    style={{ marginRight: 8 }}
+                                >
+                                    {_l.TID_MANAGE_USER_INFO_EDIT}
+                                </Button>
+                                <Popconfirm
+                                    title={
+                                        _l.TID_COMMON_REMOVE_CONFIRM
+                                    }
+                                    onConfirm={() => handleDelete(user)}
+                                    okText={_l.TID_COMMON_CONFIRM}
+                                    cancelText={_l.TID_COMMON_CANCEL}
+                                >
+                                    <Button type="primary" danger>
+                                        {_l.TID_MANAGE_USER_INFO_REMOVE}
                                     </Button>
-                                    <Popconfirm
-                                        title={
-                                            _l.TID_MANAGE_USER_INFO_REMOVE_CONFIRM
-                                        }
-                                        onConfirm={() => handleDelete(user)}
-                                        okText={_l.TID_COMMON_CONFIRM}
-                                        cancelText={_l.TID_COMMON_CANCEL}
-                                    >
-                                        <Button type="primary" danger>
-                                            {_l.TID_MANAGE_USER_INFO_REMOVE}
-                                        </Button>
-                                    </Popconfirm>
-                                </Space>
-                            }
-                        >
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    marginBottom: "8px",
-                                }}
-                            >
-                                <Typography.Text strong>
-                                    {user.username}
-                                </Typography.Text>
-                                <Typography.Text type="secondary">
-                                    {_l.TID_MANAGE_USER_ROLE}: {user.role}
-                                </Typography.Text>
-                            </div>
-                            <Typography.Text type="secondary">
-                                {_l.TID_REGISTER_EMAIL}: {user.email}
-                            </Typography.Text>
-                        </Card>
-                    </List.Item>
-                )}
+                                </Popconfirm>
+                            </>
+                        ),
+                    },
+                ]}
             />
 
             <Pagination

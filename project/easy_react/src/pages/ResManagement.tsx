@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Upload, message } from 'antd';
-import { useRequest } from 'ahooks';
+import React, { useEffect, useState } from "react";
+import { Table, Button, Modal, Form, Upload, message, Popconfirm } from "antd";
+import { useRequest } from "ahooks";
 import { fetchGet, fetchPost, fetchUpload } from "../utils/netUtil";
+import _l from "../utils/i18n";
 
 const PAGE_SIZE = 10;
 
 interface Resource {
     resource_id: number;
     path: string;
-    res_type: string;
 }
 
 const ResManagement: React.FC = () => {
@@ -16,7 +16,7 @@ const ResManagement: React.FC = () => {
     const [totalResources, setTotalResources] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-    const [form] = Form.useForm();
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const { run: fetchResourcesCountRequest } = useRequest(
         () => fetchGet("/upload/resources_count"),
@@ -29,7 +29,8 @@ const ResManagement: React.FC = () => {
     );
 
     const { run: fetchResourcesRequest } = useRequest(
-        (page: number) => fetchPost("/upload/resources", { page, page_size: PAGE_SIZE }),
+        (page: number) =>
+            fetchPost("/upload/resources", { page, page_size: PAGE_SIZE }),
         {
             manual: true,
             onSuccess: (data) => {
@@ -43,13 +44,13 @@ const ResManagement: React.FC = () => {
         {
             manual: true,
             onSuccess: () => {
-                message.success("上传成功");
+                message.success(_l.TID_COMMON_SUCCESS);
                 fetchResourcesCountRequest();
                 fetchResourcesRequest(currentPage);
                 setIsModalVisible(false);
             },
-            onError: () => {
-                message.error("上传失败");
+            onError: (error) => {
+                message.error(error.message);
             },
         }
     );
@@ -59,12 +60,12 @@ const ResManagement: React.FC = () => {
         {
             manual: true,
             onSuccess: () => {
-                message.success("删除成功");
+                message.success(_l.TID_COMMON_SUCCESS);
                 fetchResourcesCountRequest();
                 fetchResourcesRequest(currentPage);
             },
-            onError: () => {
-                message.error("删除失败");
+            onError: (error) => {
+                message.error(error.message);
             },
         }
     );
@@ -84,46 +85,85 @@ const ResManagement: React.FC = () => {
     };
 
     const handleUpload = (file: File) => {
-        uploadResourceRequest(file);
-        return false; // 阻止 Upload 组件自动上传
+        setSelectedFile(file);
+        return false;
+    };
+
+    const handleSubmit = () => {
+        if (selectedFile) {
+            uploadResourceRequest(selectedFile);
+        } else {
+            message.error(_l.TID_COMMON_PLZ_CHOOSE);
+        }
     };
 
     return (
         <>
-            <Button type="primary" onClick={() => setIsModalVisible(true)}>上传资源</Button>
+            <Button
+                type="primary"
+                onClick={() => {
+                    setSelectedFile(null);
+                    setIsModalVisible(true);
+                }}
+            >
+                {_l.TID_COMMON_UPLOAD}
+            </Button>
             <Table
                 dataSource={resources}
+                rowKey="resource_id"
                 pagination={{
                     total: totalResources,
                     pageSize: PAGE_SIZE,
                     onChange: handlePageChange,
                 }}
                 columns={[
-                    { title: '资源 ID', dataIndex: 'resource_id', key: 'resource_id' },
-                    { title: '路径', dataIndex: 'path', key: 'path' },
-                    { title: '类型', dataIndex: 'res_type', key: 'res_type' },
                     {
-                        title: '操作',
+                        title: _l.TID_COMMON_ID,
+                        dataIndex: "resource_id",
+                        key: "resource_id",
+                    },
+                    { title: _l.TID_COMMON_PATH, dataIndex: "path", key: "path" },
+                    {
+                        title: _l.TID_COMMON_OPERATION,
                         render: (_, record) => (
-                            <Button onClick={() => handleDelete(record.resource_id)}>删除</Button>
+                            <Popconfirm
+                                title={_l.TID_COMMON_REMOVE_CONFIRM}
+                                onConfirm={() =>
+                                    handleDelete(record.resource_id)
+                                }
+                                okText={_l.TID_COMMON_CONFIRM}
+                                cancelText={_l.TID_COMMON_CANCEL}
+                            >
+                                <Button type="primary" danger>
+                                    {_l.TID_MANAGE_USER_INFO_REMOVE}
+                                </Button>
+                            </Popconfirm>
                         ),
                     },
                 ]}
             />
             <Modal
-                title="上传资源"
+                title={_l.TID_COMMON_UPLOAD}
                 open={isModalVisible}
                 onCancel={() => setIsModalVisible(false)}
                 footer={null}
             >
                 <Form>
                     <Form.Item>
-                        <Upload beforeUpload={handleUpload} showUploadList={false}>
-                            <Button>选择文件</Button>
+                        <Upload
+                            beforeUpload={handleUpload}
+                            showUploadList={false}
+                        >
+                            <Button>{_l.TID_COMMON_CHOOSE}</Button>
                         </Upload>
+                        {selectedFile && (
+                            <div>{_l.TID_COMMON_HAS_CHOOSE}: {selectedFile.name}</div>
+                        )}
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" onClick={form.submit}>提交</Button>
+                        <Button type="primary" onClick={handleSubmit}>
+                            {_l.TID_COMMON_COMMIT}
+                        </Button>
                     </Form.Item>
                 </Form>
             </Modal>

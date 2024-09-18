@@ -27,7 +27,7 @@ def update_user(_):
 	filename = secure_filename(file.filename)
 
 	file.save(os.path.join(UPLOAD_FOLDER, filename))
-	new_resource = Resource(path=filename, res_type="file")
+	new_resource = Resource(path=filename)
 	db.session.add(new_resource)
 	db.session.commit()
 	return jsonify({"message": _l("TID_UPLOAD_SUCCESS"), "status": 200})
@@ -87,7 +87,6 @@ def get_resources(_):
 		resource_info = {
 			"resource_id": resource.id,
 			"path": resource.path,
-			"res_type": resource.res_type,
 		}
 		resources_info.append(resource_info)
 
