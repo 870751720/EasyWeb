@@ -17,6 +17,8 @@ services:
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
       - SERVER_IP=${SERVER_IP}
+    volumes:
+      - web_data:/app/uploads
     depends_on:
       - db
 
@@ -32,3 +34,4 @@ services:
 
 volumes:
   mysql_data:
+  web_data:

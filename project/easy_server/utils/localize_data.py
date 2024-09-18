@@ -24,6 +24,15 @@ localize_info = {
 		"TID_AUTH_EXPIRED_TOKEN": "Token has expired",
 		"TID_AUTH_INVALID_TOKEN": "Invalid token",
 		"TID_AUTH_NO_PERMISSION": "You do not have permission to perform this action",
+		"TID_UPLOAD_NO_FILE_PART": "No file part",
+		"TID_UPLOAD_NO_SELECTED_FILE": "No file selected",
+		"TID_UPLOAD_FILE_SIZE_EXCEEDED": "File size exceeded",
+		"TID_UPLOAD_SUCCESS": "File uploaded successfully",
+		"TID_UPLOAD_FILE_NOT_FOUND": "File not found",
+		"TID_UPLOAD_NO_RESOURCE_ID": "Resource ID is required",
+		"TID_UPLOAD_RESOURCE_NOT_FOUND": "Resource not found",
+		"TID_UPLOAD_FILE_NOT_FOUND_SERVER": "File not found on server",
+		"TID_UPLOAD_DELETE_SUCCESS": "File deleted successfully"
 	},
 	"ch": {
 		"TID_USER_INFO_NEED": "邮箱，用户名和密码是必填项",
@@ -48,6 +57,15 @@ localize_info = {
 		"TID_AUTH_EXPIRED_TOKEN": "登录已过期, 请重新登录",
 		"TID_AUTH_INVALID_TOKEN": "非法操作, 停下",
 		"TID_AUTH_NO_PERMISSION": "您没有权限执行此操作",
+		"TID_UPLOAD_NO_FILE_PART": "没有文件",
+		"TID_UPLOAD_NO_SELECTED_FILE": "没有选择文件",
+		"TID_UPLOAD_FILE_SIZE_EXCEEDED": "文件大小超过限制",
+		"TID_UPLOAD_SUCCESS": "文件上传成功",
+		"TID_UPLOAD_FILE_NOT_FOUND": "文件不存在",
+		"TID_UPLOAD_NO_RESOURCE_ID": "资源 ID 是必填项",
+		"TID_UPLOAD_RESOURCE_NOT_FOUND": "资源不存在",
+		"TID_UPLOAD_FILE_NOT_FOUND_SERVER": "文件不存在",
+		"TID_UPLOAD_DELETE_SUCCESS": "文件删除成功"
 	},
 	"jp": {
 		"TID_USER_INFO_NEED": "メールアドレス、ユーザー名、パスワードが必須",
@@ -72,5 +90,14 @@ localize_info = {
 		"TID_AUTH_EXPIRED_TOKEN": "ログインが期限切れです",
 		"TID_AUTH_INVALID_TOKEN": "非法操作",
 		"TID_AUTH_NO_PERMISSION": "この操作を実行する権限がありません",
+		"TID_UPLOAD_NO_FILE_PART": "ファイルがありません",
+		"TID_UPLOAD_NO_SELECTED_FILE": "ファイルが選択されていません",
+		"TID_UPLOAD_FILE_SIZE_EXCEEDED": "ファイルサイズが制限を超えています",
+		"TID_UPLOAD_SUCCESS": "ファイルをアップロードしました",
+		"TID_UPLOAD_FILE_NOT_FOUND": "ファイルが見つかりません",
+		"TID_UPLOAD_NO_RESOURCE_ID": "リソースIDが必須",
+		"TID_UPLOAD_RESOURCE_NOT_FOUND": "リソースが見つかりません",
+		"TID_UPLOAD_FILE_NOT_FOUND_SERVER": "ファイルが見つかりません",
+		"TID_UPLOAD_DELETE_SUCCESS": "ファイルを削除しました"
 	}
 }
