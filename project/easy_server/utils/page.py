@@ -1,3 +1,4 @@
+import os
 from flask import send_from_directory, request, g
 
 
@@ -10,4 +11,6 @@ def init_page(app):
 	@app.route("/", defaults={"path": ""})
 	@app.route("/<path:path>")
 	def serve_react_app(path):
+		if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+			return send_from_directory(app.static_folder, path)
 		return send_from_directory(app.static_folder, "index.html")
