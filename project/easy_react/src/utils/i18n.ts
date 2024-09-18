@@ -81,6 +81,7 @@ const translations = {
         TID_ADMIN_RESOURCE_MANAGEMENT: "资源管理",
         TID_ADMIN_TRIGGER_MANAGEMENT: "触发器管理",
         TID_MANAGE_TRIGGER_INIT_DF: "初始化数据库",
+        TID_MANAGE_TRIGGER_DOCKER_LOGS: "Docker 日志",
     },
     en: {
         TID_HOME: 'Home',
@@ -164,6 +165,7 @@ const translations = {
         TID_ADMIN_RESOURCE_MANAGEMENT: 'Resource management',
         TID_ADMIN_TRIGGER_MANAGEMENT: 'Trigger management',
         TID_MANAGE_TRIGGER_INIT_DF: 'Initialize database',
+        TID_MANAGE_TRIGGER_DOCKER_LOGS: 'Docker logs',
     },
     jp: {
         TID_HOME: 'ホーム',
@@ -246,6 +248,7 @@ const translations = {
         TID_ADMIN_RESOURCE_MANAGEMENT: 'リソース管理',
         TID_ADMIN_TRIGGER_MANAGEMENT: 'トリカゥ管理',
         TID_MANAGE_TRIGGER_INIT_DF: 'データブースの初期化',
+        TID_MANAGE_TRIGGER_DOCKER_LOGS: 'Docker ログ',
     }
 };
 
