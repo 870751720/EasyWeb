@@ -1,5 +1,5 @@
-import { API_BASE_URL } from "./config";
 import { message } from 'antd';
+import { API_BASE_URL } from "./config";
 
 const getAccessToken = () => localStorage.getItem('accessToken');
 

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Form, Upload, message, Popconfirm } from "antd";
 import { useRequest } from "ahooks";
-import { fetchGet, fetchPost, fetchUpload, resUrl } from "../utils/netUtil";
-import _l from "../utils/i18n";
+import { Button, Form, message, Modal, Popconfirm, Table, Upload } from "antd";
+import React, { useEffect, useState } from "react";
 import { isVideo } from "../utils/commonUtil";
+import _l from "../utils/i18n";
+import { fetchGet, fetchPost, fetchUpload, resUrl } from "../utils/netUtil";
 const PAGE_SIZE = 10;
 
 interface Resource {

@@ -1,6 +1,6 @@
 import React from 'react';
-import './Home.css';
 import _l from "../utils/i18n";
+import './Home.css';
 
 const Home: React.FC = () => {
     return (

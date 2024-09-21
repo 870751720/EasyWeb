@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import routes from './routes';
+import { Navigate, Route, HashRouter as Router, Routes } from 'react-router-dom';
 import Header from './components/Head';
+import routes from './routes';
 
 const App: React.FC = () => {
     return (

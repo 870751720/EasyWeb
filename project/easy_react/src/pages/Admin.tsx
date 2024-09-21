@@ -1,10 +1,10 @@
-import React from "react";
 import { Tabs } from "antd";
-import UserManagement from "./UserManagement";
+import React from "react";
+import _l from "../utils/i18n";
+import './Admin.css';
 import ResManagement from "./ResManagement";
 import TriggerManagement from "./TriggerManagement";
-import './Admin.css';
-import _l from "../utils/i18n";
+import UserManagement from "./UserManagement";
 
 const Admin: React.FC = () => {
     const items = [

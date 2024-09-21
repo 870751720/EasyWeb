@@ -1,8 +1,8 @@
-import React from "react";
-import { Button, message, Space } from "antd";
 import { useRequest } from "ahooks";
-import { fetchGet } from "../utils/netUtil";
+import { Button, message, Space } from "antd";
+import React from "react";
 import _l from "../utils/i18n";
+import { fetchGet } from "../utils/netUtil";
 
 const TriggerManagement: React.FC = () => {
     const { run: initDatabaseRequest } = useRequest(

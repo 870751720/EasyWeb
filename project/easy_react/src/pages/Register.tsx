@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
 import { useRequest } from "ahooks";
 import { Form, Input, message } from "antd";
-import { fetchPost } from "../utils/netUtil";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Register.css";
 import _l from "../utils/i18n";
+import { fetchPost } from "../utils/netUtil";
+import "./Register.css";
 
 const Register: React.FC = () => {
     const [isFormValid, setIsFormValid] = useState(false);

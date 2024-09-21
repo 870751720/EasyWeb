@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Form, Input, message } from "antd";
 import { useRequest } from "ahooks";
-import { fetchPost, setAccessToken } from "../utils/netUtil";
+import { Form, Input, message } from "antd";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
 import _l from "../utils/i18n";
+import { fetchPost, setAccessToken } from "../utils/netUtil";
+import "./Login.css";
 
 const Login: React.FC = () => {
     const [isFormValid, setIsFormValid] = useState(false);
