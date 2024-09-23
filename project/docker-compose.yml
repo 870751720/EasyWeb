@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile-Web
+      dockerfile: Dockerfile
     container_name: ${IMAGE_NAME}
     ports:
       - "80:5000"
