@@ -1,7 +1,6 @@
 Flask
 flask_sqlalchemy
 flask_cors
-Flask-Migrate
 Flask-Mail
 pymysql
 pyjwt
