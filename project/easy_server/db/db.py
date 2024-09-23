@@ -1,5 +1,4 @@
 import os
-from db.user_db import User
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -14,6 +13,7 @@ def get_database_uri():
 	return f"mysql+pymysql://{user}:{password}@{host}/{database}"
 
 def init_db(app):
+	from db.user_db import User
 	app.config["SQLALCHEMY_DATABASE_URI"] = get_database_uri()
 	app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 	app.config["SECRET_KEY"] = "4d362127bea8fb5f6cd1fb9a06b2e32a4c4bff33838c9fa8"
