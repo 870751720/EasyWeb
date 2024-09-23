@@ -45,7 +45,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: project
-          target: /tmp
+          target: /usr/web
           rm: true
 
       - name: Run deploy script
@@ -56,5 +56,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            chmod +x /tmp/project/deploy.sh
-            /tmp/project/deploy.sh
+            chmod +x /usr/web/project/deploy.sh
+            /usr/web/project/deploy.sh

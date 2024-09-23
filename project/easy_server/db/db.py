@@ -20,8 +20,7 @@ def init_db(app):
 	db.init_app(app)
 
 	with app.app_context():
-		if not db.engine.table_names():
-			db.drop_all()
+		if not db.session.query(User).first():
 			db.create_all()
 			superadmin = User(
 				username="admin",
