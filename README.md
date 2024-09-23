@@ -9,15 +9,3 @@
 # 转移额外需要做的事情
 1 迁移数据库
 2 迁移上传的资源
-
-# 新UI
-# 安装 Nvm
-1
-https://github.com/coreybutler/nvm-windows/releases ->Assets->nvm-setup.exe
-
-2
-nvm help can see all
-nvm install 22.1.0
-nvm use 22.1.0
-3
-npx create-react-app easy_react
