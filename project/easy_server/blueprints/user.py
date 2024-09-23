@@ -64,8 +64,6 @@ def login():
 @user_bp.route("/user_info", methods=["POST"])
 def get_user_info():
 	data = request.json
-	from db.db import check_db
-	check_db()
 	user_id = data.get("user_id")
 	username = data.get("username")
 	email = data.get("email")
