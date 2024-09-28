@@ -202,9 +202,3 @@ def add_user(_):
 	db.session.commit()
 
 	return jsonify({"message": _l("TID_USER_ADD_SUCCESS"), "status": 200})
-
-@user_bp.route("/addx", methods=["GET"])
-def add_userx():
-	from db.db import check_db
-	check_db()
-	return jsonify({"message": _l("TID_USER_ADD_SUCCESS"), "status": 200})

@@ -30,7 +30,8 @@ localize_info = {
 		"TID_UPLOAD_NO_RESOURCE_ID": "Resource ID is required",
 		"TID_UPLOAD_RESOURCE_NOT_FOUND": "Resource not found",
 		"TID_UPLOAD_FILE_NOT_FOUND_SERVER": "File not found on server",
-		"TID_UPLOAD_DELETE_SUCCESS": "File deleted successfully"
+		"TID_UPLOAD_DELETE_SUCCESS": "File deleted successfully",
+		"TID_INIT_PROJECT_DROP_SUCCESS": "Database dropped successfully",
 	},
 	"ch": {
 		"TID_USER_INFO_NEED": "邮箱，用户名和密码是必填项",
@@ -61,7 +62,8 @@ localize_info = {
 		"TID_UPLOAD_NO_RESOURCE_ID": "资源 ID 是必填项",
 		"TID_UPLOAD_RESOURCE_NOT_FOUND": "资源不存在",
 		"TID_UPLOAD_FILE_NOT_FOUND_SERVER": "文件不存在",
-		"TID_UPLOAD_DELETE_SUCCESS": "文件删除成功"
+		"TID_UPLOAD_DELETE_SUCCESS": "文件删除成功",
+		"TID_INIT_PROJECT_DROP_SUCCESS": "数据库删除成功",
 	},
 	"jp": {
 		"TID_USER_INFO_NEED": "メールアドレス、ユーザー名、パスワードが必須",
@@ -92,6 +94,7 @@ localize_info = {
 		"TID_UPLOAD_NO_RESOURCE_ID": "リソースIDが必須",
 		"TID_UPLOAD_RESOURCE_NOT_FOUND": "リソースが見つかりません",
 		"TID_UPLOAD_FILE_NOT_FOUND_SERVER": "ファイルが見つかりません",
-		"TID_UPLOAD_DELETE_SUCCESS": "ファイルを削除しました"
+		"TID_UPLOAD_DELETE_SUCCESS": "ファイルを削除しました",
+		"TID_INIT_PROJECT_DROP_SUCCESS": "データベース削除完了",
 	}
 }
