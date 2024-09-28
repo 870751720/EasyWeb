@@ -3,6 +3,7 @@ from db.db import db
 from db.user_db import User
 from utils.localize import _l
 from utils.auth import token_and_roles_required
+from sqlalchemy import inspect
 
 init_project_bp = Blueprint("init_project", __name__)
 
@@ -16,7 +17,7 @@ def drop(_):
 
 @init_project_bp.route("/create", methods=["GET"])
 def create():
-	existing_tables = db.engine.table_names()
+	existing_tables = inspect(db.engine).get_table_names()
 	if 'User' not in existing_tables:
 		db.drop_all()
 		db.create_all()
