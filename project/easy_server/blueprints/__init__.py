@@ -1,7 +1,7 @@
 import os
 
 
-def register_blueprints(app):
+def init_blueprints(app):
 	blueprints_dir = os.path.dirname(__file__)
 	for filename in os.listdir(blueprints_dir):
 		if filename.endswith(".py") and filename != "__init__.py":
