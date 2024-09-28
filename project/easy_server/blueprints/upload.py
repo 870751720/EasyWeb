@@ -65,6 +65,7 @@ def delete_file(_):
 
 
 @upload_bp.route("/resources_count", methods=["GET"])
+@token_and_roles_required(["admin", "superadmin"])
 def get_resources_count(_):
 	resources_count = Resource.query.count()
 	return jsonify({"resources_count": resources_count, "status": 200})
