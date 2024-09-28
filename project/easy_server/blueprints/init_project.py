@@ -30,4 +30,4 @@ def create():
 		)
 		db.session.add(superadmin)
 		db.session.commit()
-	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200, "tables": "user" not in existing_tables})
+	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
