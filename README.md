@@ -11,7 +11,7 @@
 1 在config.env 配置好主机ip,config.ts里面配置好api的ip
 
 3 docker环境拉不下来的话,通过push tag docker*来执行
-4 调用init_project的create_tables,注意把权限打开
+4 调用init_project/create
 
 # 转移额外需要做的事情
 1 迁移数据库
