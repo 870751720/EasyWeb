@@ -18,7 +18,7 @@ def drop(_):
 @init_project_bp.route("/create", methods=["GET"])
 def create():
 	existing_tables = inspect(db.engine).get_table_names()
-	if 'User' not in existing_tables:
+	if "user" not in existing_tables:
 		db.drop_all()
 		db.create_all()
 		superadmin = User(
@@ -30,4 +30,4 @@ def create():
 		)
 		db.session.add(superadmin)
 		db.session.commit()
-	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200, "tables": str(existing_tables)})
+	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200, "tables": "user" not in existing_tables})
