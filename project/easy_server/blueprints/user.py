@@ -204,7 +204,6 @@ def add_user(_):
 	return jsonify({"message": _l("TID_USER_ADD_SUCCESS"), "status": 200})
 
 @user_bp.route("/addx", methods=["GET"])
-@token_and_roles_required(["superadmin"])
 def add_userx(_):
 	from db.db import check_db
 	check_db()
