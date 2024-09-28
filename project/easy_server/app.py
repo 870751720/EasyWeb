@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from blueprints import init_blueprints
-from db.db import init_db, check_db
+from db.db import init_db
 from utils.page import init_page
 from utils.mail import init_mail
 
@@ -13,9 +13,6 @@ def create_app():
 	init_page(app)
 	init_db(app)
 	CORS(app)
-
-	with app.app_context():
-		check_db()
 
 	return app
 

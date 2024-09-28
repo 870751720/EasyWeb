@@ -322,9 +322,6 @@ const UserManagement: React.FC = () => {
                         ]}
                     >
                         <Select>
-                            <Select.Option value="guest">
-                                {_l.TID_MANAGE_USER_ROLE_GUEST}
-                            </Select.Option>
                             <Select.Option value="user">
                                 {_l.TID_MANAGE_USER_ROLE_USER}
                             </Select.Option>
