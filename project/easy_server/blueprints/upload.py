@@ -27,7 +27,7 @@ def upload_upload(_):
 	new_resource = Resource(path=filename)
 	db.session.add(new_resource)
 	db.session.commit()
-	return jsonify({"message": _l("TID_UPLOAD_SUCCESS"), "status": 200})
+	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
 
 
 @upload_bp.route("/file/<filename>", methods=["GET"])
@@ -59,7 +59,7 @@ def upload_delete(_):
 	db.session.delete(resource)
 	db.session.commit()
 
-	return jsonify({"message": _l("TID_UPLOAD_DELETE_SUCCESS"), "status": 200})
+	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
 
 
 @upload_bp.route("/count", methods=["GET"])

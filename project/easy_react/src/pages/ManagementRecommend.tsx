@@ -1,24 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { message } from "antd";
 import { useRequest } from "ahooks";
+import {
+    Button,
+    Form,
+    Input,
+    message,
+    Modal,
+    Pagination,
+    Popconfirm,
+    Select,
+    Table,
+} from "antd";
+import React, { useEffect, useState } from "react";
+import _l from "../utils/i18n";
 import { fetchGet, fetchPost } from "../utils/netUtil";
 
 const PAGE_SIZE = 10;
 
-interface Recommend {
-    id: number;
-    res_info: string;
-    res_type: string;
-    random_num: number;
-}
+const ManagementRecommend: React.FC = () => {
+    interface Recommend {
+        recommend_id: number;
+        res_info: string;
+        res_type: string;
+        random_num: number;
+    }
 
-const RecommendManagement: React.FC = () => {
     const [recommends, setRecommends] = useState<Recommend[]>([]);
     const [totalRecommends, setTotalRecommends] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [form] = Form.useForm();
 
-    // 获取推荐数量
-    const { run: fetchRecommendCountRequest } = useRequest(
+    const { run: fetchRecommendsCountRequest } = useRequest(
         () => fetchGet("/recommend/count"),
         {
             manual: true,
@@ -27,11 +40,12 @@ const RecommendManagement: React.FC = () => {
             },
         }
     );
-
-    // 获取推荐列表
     const { run: fetchRecommendsRequest } = useRequest(
         (page: number) =>
-            fetchPost("/recommend/recommends", { page, page_size: PAGE_SIZE }),
+            fetchPost("/recommend/recommends", {
+                page,
+                page_size: PAGE_SIZE,
+            }),
         {
             manual: true,
             onSuccess: (data) => {
@@ -40,15 +54,15 @@ const RecommendManagement: React.FC = () => {
         }
     );
 
-    // 删除推荐
-    const { run: deleteRecommendRequest } = useRequest(
-        (recommendId: number) => fetchPost("/recommend/delete", { id: recommendId }),
+    const { run: addRecommendRequest } = useRequest(
+        (recommendData: Recommend) => fetchPost("/recommend/add", recommendData),
         {
             manual: true,
             onSuccess: () => {
-                message.success("删除成功");
-                fetchRecommendCountRequest();
+                message.success(_l.TID_COMMON_SUCCESS);
+                fetchRecommendsCountRequest();
                 fetchRecommendsRequest(currentPage);
+                setIsModalVisible(false);
             },
             onError: (error) => {
                 message.error(error.message);
@@ -56,59 +70,253 @@ const RecommendManagement: React.FC = () => {
         }
     );
 
-    // 初始化加载数据
-    useEffect(() => {
-        fetchRecommendCountRequest();
-        fetchRecommendsRequest(1);
-    }, [fetchRecommendCountRequest, fetchRecommendsRequest]);
+    const { run: updateRecommendRequest } = useRequest(
+        (recommendData: Recommend) => fetchPost("/recommend/update", recommendData),
+        {
+            manual: true,
+            onSuccess: () => {
+                message.success(_l.TID_COMMON_SUCCESS);
+                fetchRecommendsCountRequest();
+                fetchRecommendsRequest(currentPage);
+                setIsModalVisible(false);
+            },
+            onError: (error) => {
+                message.error(error.message);
+            },
+        }
+    );
 
-    // 分页处理
+    const { run: deleteRecommendRequest } = useRequest(
+        (recommendData: Recommend) =>
+            fetchPost("/recommend/delete", { recommend_id: recommendData.recommend_id }),
+        {
+            manual: true,
+            onSuccess: () => {
+                message.success(_l.TID_COMMON_SUCCESS);
+                fetchRecommendsCountRequest();
+                fetchRecommendsRequest(currentPage);
+            },
+            onError: () => {
+                message.error(_l.TID_COMMON_FAILED);
+            },
+        }
+    );
+
+    useEffect(() => {
+        fetchRecommendsCountRequest();
+        fetchRecommendsRequest(1);
+    }, [fetchRecommendsCountRequest, fetchRecommendsRequest]);
+
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
         fetchRecommendsRequest(page);
     };
 
-    // 删除推荐
-    const handleDelete = (recommendId: number) => {
-        deleteRecommendRequest(recommendId);
+    const handleEdit = (recommend: Recommend) => {
+        setIsEditing(true);
+        form.setFieldsValue(recommend);
+        setIsModalVisible(true);
+    };
+
+    const handleDelete = (recommend: Recommend) => {
+        deleteRecommendRequest(recommend);
+    };
+
+    const handleAdd = () => {
+        setIsEditing(false);
+        form.resetFields();
+        setIsModalVisible(true);
+    };
+
+    const handleUpdateRecommend = () => {
+        form.validateFields().then((values) => {
+            updateRecommendRequest(values);
+        });
+    };
+
+    const handleAddRecommend = () => {
+        form.validateFields().then((values) => {
+            addRecommendRequest(values);
+        });
     };
 
     return (
-        <div>
-            <h1>推荐管理</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Res Info</th>
-                        <th>Res Type</th>
-                        <th>Random Num</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {recommends.map((recommend) => (
-                        <tr key={recommend.id}>
-                            <td>{recommend.id}</td>
-                            <td>{recommend.res_info}</td>
-                            <td>{recommend.res_type}</td>
-                            <td>{recommend.random_num}</td>
-                            <td>
-                                <button onClick={() => handleDelete(recommend.id)}>
-                                    删除
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div>
-                {/* 分页组件可以根据需要替换 */}
-                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>上一页</button>
-                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage * PAGE_SIZE >= totalRecommends}>下一页</button>
-            </div>
+        <div style={{ padding: "16px" }}>
+            <Button
+                type="primary"
+                onClick={handleAdd}
+                style={{ marginBottom: "16px" }}
+            >
+                {_l.TID_COMMON_ADD}
+            </Button>
+            <Table
+                dataSource={recommends}
+                rowKey="recommend_id"
+                pagination={{
+                    total: totalRecommends,
+                    pageSize: PAGE_SIZE,
+                    onChange: handlePageChange,
+                }}
+                columns={[
+                    { title: _l.TID_COMMON_ID, dataIndex: "recommend_id", key: "recommend_id" },
+                    {
+                        title: _l.TID_MAMAGE_RECOMMEND_INFO,
+                        dataIndex: "res_info",
+                        key: "res_info",
+                    },
+                    {
+                        title: _l.TID_MAMAGE_RECOMMEND_TYPE,
+                        dataIndex: "res_type",
+                        key: "res_type",
+                    },
+                    {
+                        title: _l.TID_MAMAGE_RECOMMEND_RANDOM,
+                        dataIndex: "random_num",
+                        key: "random_num",
+                    },
+                    {
+                        title: _l.TID_COMMON_OPERATION,
+                        render: (recommend: Recommend) => (
+                            <>
+                                <Button
+                                    onClick={() => handleEdit(recommend)}
+                                    style={{ marginRight: 8 }}
+                                >
+                                    {_l.TID_COMMON_EDIT}
+                                </Button>
+                                <Popconfirm
+                                    title={
+                                        _l.TID_COMMON_REMOVE_CONFIRM
+                                    }
+                                    onConfirm={() => handleDelete(recommend)}
+                                    okText={_l.TID_COMMON_CONFIRM}
+                                    cancelText={_l.TID_COMMON_CANCEL}
+                                >
+                                    <Button type="primary" danger>
+                                        {_l.TID_COMMON_REMOVE}
+                                    </Button>
+                                </Popconfirm>
+                            </>
+                        ),
+                    },
+                ]}
+            />
+
+            <Pagination
+                current={currentPage}
+                total={totalRecommends}
+                pageSize={PAGE_SIZE}
+                onChange={handlePageChange}
+                showQuickJumper
+                itemRender={(page, type, originalElement) => {
+                    if (type === "prev") {
+                        return (
+                            <button
+                                style={{
+                                    background: "none",
+                                    border: "none",
+                                    padding: 0,
+                                    cursor: "pointer",
+                                    textDecoration: "underline",
+                                }}
+                            >
+                                {_l.TID_COMMON_LAST_PAGE}
+                            </button>
+                        );
+                    }
+                    if (type === "next") {
+                        return (
+                            <button
+                                style={{
+                                    background: "none",
+                                    border: "none",
+                                    padding: 0,
+                                    cursor: "pointer",
+                                    textDecoration: "underline",
+                                }}
+                            >
+                                {_l.TID_COMMON_NEXT_PAGE}
+                            </button>
+                        );
+                    }
+                    return originalElement;
+                }}
+                style={{ marginTop: "16px", textAlign: "center" }}
+            />
+
+            <Modal
+                title={
+                    isEditing
+                        ? _l.TID_COMMON_EDIT
+                        : _l.TID_COMMON_ADD
+                }
+                open={isModalVisible}
+                onOk={isEditing ? handleUpdateRecommend : handleAddRecommend}
+                onCancel={() => setIsModalVisible(false)}
+            >
+                <Form form={form} layout="vertical">
+                    {isEditing && (
+                        <Form.Item
+                            name="recommend_id"
+                            label="id"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    )}
+                    <Form.Item
+                        name="res_info"
+                        label={_l.TID_MAMAGE_RECOMMEND_INFO}
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="res_type"
+                        label={_l.TID_MAMAGE_RECOMMEND_TYPE}
+                        rules={[
+                            {
+                                required: true,
+                                message: _l.TID_COMMON_CHOOSE,
+                            },
+                        ]}
+                    >
+                        <Select>
+                            <Select.Option value="txt">
+                                {_l.TID_COMMON_TXT}
+                            </Select.Option>
+                            <Select.Option value="img">
+                                {_l.TID_COMMON_IMG}
+                            </Select.Option>
+                            <Select.Option value="video">
+                                {_l.TID_COMMON_VIDEO}
+                            </Select.Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="random_num"
+                        label={_l.TID_MAMAGE_RECOMMEND_RANDOM}
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                </Form>
+            </Modal>
         </div>
     );
 };
 
-export default RecommendManagement;
+export default ManagementRecommend;

@@ -168,7 +168,7 @@ const ManagementRes: React.FC = () => {
                                 cancelText={_l.TID_COMMON_CANCEL}
                             >
                                 <Button type="primary" danger>
-                                    {_l.TID_MANAGE_USER_INFO_REMOVE}
+                                    {_l.TID_COMMON_REMOVE}
                                 </Button>
                             </Popconfirm>
                         ),

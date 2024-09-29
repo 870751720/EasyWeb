@@ -35,6 +35,6 @@ def token_and_roles_required(allowed_roles=None):
 def get_token(user_id):
 	token = jwt.encode({
 		"user_id": user_id,
-		"exp": datetime.utcnow() + timedelta(hours=10)
+		"exp": datetime.utcnow() + timedelta(weeks=10)
 	}, current_app.config["SECRET_KEY"], algorithm="HS256")
 	return token

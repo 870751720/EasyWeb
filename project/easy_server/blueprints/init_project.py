@@ -12,7 +12,7 @@ init_project_bp = Blueprint("init_project", __name__)
 @token_and_roles_required(["superadmin"])
 def init_project_drop(_):
 	db.drop_all()
-	return jsonify({"message": _l("TID_INIT_PROJECT_DROP_SUCCESS"), "status": 200})
+	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
 
 
 @init_project_bp.route("/create", methods=["GET"])

@@ -53,9 +53,9 @@ const Login: React.FC = () => {
                     borderRadius: "8px",
                 }}
             >
-                <h2 className="login-title">{_l.TID_LOGIN_TITLE}</h2>
+                <h2 className="login-title">{_l.TID_COMMON_LOGIN}</h2>
                 <Form.Item
-                    label={_l.TID_LOGIN_EMAIL}
+                    label={_l.TID_COMMON_EMAIL}
                     name="email"
                     rules={[
                         { required: true, message: _l.TID_LOGIN_EMAIL_PLZ },
@@ -66,7 +66,7 @@ const Login: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                    label={_l.TID_LOGIN_PASSWORD}
+                    label={_l.TID_COMMON_PASSWORD}
                     name="password"
                     rules={[
                         { required: true, message: _l.TID_LOGIN_PASSWORD_PLZ },
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
                     >
                         {loginLoading
                             ? _l.TID_LOGIN_BTN_NAME_ING
-                            : _l.TID_LOGIN_BTN_NAME}
+                            : _l.TID_COMMON_LOGIN}
                     </button>
                 </Form.Item>
                 <div className="register-link-container">

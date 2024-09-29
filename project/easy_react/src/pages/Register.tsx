@@ -131,7 +131,7 @@ const Register: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                    label={_l.TID_REGISTER_EMAIL}
+                    label={_l.TID_COMMON_EMAIL}
                     name="email"
                     rules={[
                         { required: true, message: _l.TID_REGISTER_EMAIL_PLZ },
@@ -158,7 +158,7 @@ const Register: React.FC = () => {
                         className="login-link"
                         onClick={() => navigate("/login")}
                     >
-                        {_l.TID_LOGIN}
+                        {_l.TID_COMMON_LOGIN}
                     </button>
                 </div>
             </Form>

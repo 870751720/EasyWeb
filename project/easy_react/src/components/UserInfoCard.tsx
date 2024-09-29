@@ -15,7 +15,7 @@ const UserInfoCard: React.FC = () => {
       {userInfo ? (
         <Card title={_l.TID_COMMON_USER_INFO} bordered={false} className="user-info-card">
           <p>{_l.TID_REGISTER_NAME}: {userInfo.name}</p>
-          <p>{_l.TID_REGISTER_EMAIL}: {userInfo.email}</p>
+          <p>{_l.TID_COMMON_EMAIL}: {userInfo.email}</p>
         </Card>
       ) : (
         <p className="no-user-info">No user information available.</p>

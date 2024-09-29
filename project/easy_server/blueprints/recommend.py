@@ -28,11 +28,11 @@ def recommend_add(_):
 	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
 
 
-@recommend_bp.route("/delete", methods=["GET"])
+@recommend_bp.route("/delete", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin"])
 def recommend_delete(_):
 	data = request.get_json()
-	recommend_id = data.get("id")
+	recommend_id = data.get("recommend_id")
 	recommend = Recommend.query.get(recommend_id)
 	db.session.delete(recommend)
 	db.session.commit()

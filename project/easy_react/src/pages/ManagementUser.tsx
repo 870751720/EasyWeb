@@ -60,7 +60,7 @@ const ManagementUser: React.FC = () => {
         {
             manual: true,
             onSuccess: () => {
-                message.success(_l.TID_MANAGE_USER_ADD_SUCCESS);
+                message.success(_l.TID_COMMON_SUCCESS);
                 fetchUsersCountRequest();
                 fetchUsersRequest(currentPage);
                 setIsModalVisible(false);
@@ -76,7 +76,7 @@ const ManagementUser: React.FC = () => {
         {
             manual: true,
             onSuccess: () => {
-                message.success(_l.TID_MANAGE_USER_EDIT_SUCCESS);
+                message.success(_l.TID_COMMON_SUCCESS);
                 fetchUsersCountRequest();
                 fetchUsersRequest(currentPage);
                 setIsModalVisible(false);
@@ -93,12 +93,12 @@ const ManagementUser: React.FC = () => {
         {
             manual: true,
             onSuccess: () => {
-                message.success(_l.TID_MANAGE_USER_REMOVE_SUCCESS);
+                message.success(_l.TID_COMMON_SUCCESS);
                 fetchUsersCountRequest();
                 fetchUsersRequest(currentPage);
             },
             onError: () => {
-                message.error(_l.TID_MANAGE_USER_REMOVE_FAILED);
+                message.error(_l.TID_COMMON_FAILED);
             },
         }
     );
@@ -148,7 +148,7 @@ const ManagementUser: React.FC = () => {
                 onClick={handleAdd}
                 style={{ marginBottom: "16px" }}
             >
-                {_l.TID_MANAGE_NEW_USER_BTN}
+                {_l.TID_COMMON_ADD}
             </Button>
             <Table
                 dataSource={users}
@@ -159,14 +159,14 @@ const ManagementUser: React.FC = () => {
                     onChange: handlePageChange,
                 }}
                 columns={[
-                    { title: _l.TID_COMMON_USER_ID, dataIndex: "user_id", key: "user_id" },
+                    { title: _l.TID_COMMON_ID, dataIndex: "user_id", key: "user_id" },
                     {
                         title: _l.TID_REGISTER_NAME,
                         dataIndex: "username",
                         key: "username",
                     },
                     {
-                        title: _l.TID_REGISTER_EMAIL,
+                        title: _l.TID_COMMON_EMAIL,
                         dataIndex: "email",
                         key: "email",
                     },
@@ -183,7 +183,7 @@ const ManagementUser: React.FC = () => {
                                     onClick={() => handleEdit(user)}
                                     style={{ marginRight: 8 }}
                                 >
-                                    {_l.TID_MANAGE_USER_INFO_EDIT}
+                                    {_l.TID_COMMON_EDIT}
                                 </Button>
                                 <Popconfirm
                                     title={
@@ -194,7 +194,7 @@ const ManagementUser: React.FC = () => {
                                     cancelText={_l.TID_COMMON_CANCEL}
                                 >
                                     <Button type="primary" danger>
-                                        {_l.TID_MANAGE_USER_INFO_REMOVE}
+                                        {_l.TID_COMMON_REMOVE}
                                     </Button>
                                 </Popconfirm>
                             </>
@@ -248,8 +248,8 @@ const ManagementUser: React.FC = () => {
             <Modal
                 title={
                     isEditing
-                        ? _l.TID_MANAGE_EDIT_USER_BTN
-                        : _l.TID_MANAGE_NEW_USER_BTN
+                        ? _l.TID_COMMON_EDIT
+                        : _l.TID_COMMON_ADD
                 }
                 open={isModalVisible}
                 onOk={isEditing ? handleUpdateUser : handleAddUser}
@@ -283,7 +283,7 @@ const ManagementUser: React.FC = () => {
                     </Form.Item>
                     <Form.Item
                         name="email"
-                        label={_l.TID_REGISTER_EMAIL}
+                        label={_l.TID_COMMON_EMAIL}
                         rules={[
                             {
                                 required: true,
@@ -317,7 +317,7 @@ const ManagementUser: React.FC = () => {
                         rules={[
                             {
                                 required: true,
-                                message: _l.TID_MANAGE_USER_ROLE_TIP,
+                                message: _l.TID_COMMON_CHOOSE,
                             },
                         ]}
                     >

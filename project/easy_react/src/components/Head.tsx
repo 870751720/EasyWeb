@@ -96,7 +96,7 @@ const Header = () => {
                     </Tooltip>
                 ) : (
                     <Link to="/login" style={{ marginRight: "20px" }}>
-                        {_l.TID_LOGIN}
+                        {_l.TID_COMMON_LOGIN}
                     </Link>
                 )}
 

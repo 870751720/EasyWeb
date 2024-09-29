@@ -40,7 +40,7 @@ def user_verify():
 		new_user = User(username=info["username"], password=info["password"], email=email, role="user")
 		db.session.add(new_user)
 		db.session.commit()
-		return jsonify({"message": _l("TID_USER_REGISTERED_SUCCESS"), "status": 200})
+		return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
 	else:
 		return jsonify({"error": _l("TID_USER_INVALID_CODE"), "status": 0})
 
@@ -105,7 +105,7 @@ def user_update(current_user):
 
 	db.session.commit()
 
-	return jsonify({"message": _l("TID_USER_UP_SUCCESS"), "status": 200})
+	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
 
 
 @user_bp.route("/count", methods=["GET"])
@@ -150,7 +150,7 @@ def user_delete(_):
 	db.session.delete(user)
 	db.session.commit()
 
-	return jsonify({"message": _l("TID_USER_DELETE_SUCCESS"), "status": 200})
+	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
 
 
 @user_bp.route("/add", methods=["POST"])
@@ -170,4 +170,4 @@ def user_add(_):
 	db.session.add(new_user)
 	db.session.commit()
 
-	return jsonify({"message": _l("TID_USER_ADD_SUCCESS"), "status": 200})
+	return jsonify({"message": _l("TID_COMMON_SUCCESS"), "status": 200})
