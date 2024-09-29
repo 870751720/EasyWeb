@@ -55,8 +55,6 @@ def delete_file(_):
 
 	if os.path.exists(file_path):
 		os.remove(file_path)
-	else:
-		return jsonify({"error": _l("TID_UPLOAD_FILE_NOT_FOUND_SERVER"), "status": 2})
 
 	db.session.delete(resource)
 	db.session.commit()
