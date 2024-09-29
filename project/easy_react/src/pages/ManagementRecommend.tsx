@@ -13,7 +13,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import _l from "../utils/i18n";
-import { fetchGet, fetchPost } from "../utils/netUtil";
+import { fetchGet, fetchPost, resUrl } from "../utils/netUtil";
 
 const PAGE_SIZE = 10;
 
@@ -56,7 +56,8 @@ const ManagementRecommend: React.FC = () => {
     );
 
     const { run: addRecommendRequest } = useRequest(
-        (recommendData: Recommend) => fetchPost("/recommend/add", recommendData),
+        (recommendData: Recommend) =>
+            fetchPost("/recommend/add", recommendData),
         {
             manual: true,
             onSuccess: () => {
@@ -72,7 +73,8 @@ const ManagementRecommend: React.FC = () => {
     );
 
     const { run: updateRecommendRequest } = useRequest(
-        (recommendData: Recommend) => fetchPost("/recommend/update", recommendData),
+        (recommendData: Recommend) =>
+            fetchPost("/recommend/update", recommendData),
         {
             manual: true,
             onSuccess: () => {
@@ -89,7 +91,9 @@ const ManagementRecommend: React.FC = () => {
 
     const { run: deleteRecommendRequest } = useRequest(
         (recommendData: Recommend) =>
-            fetchPost("/recommend/delete", { recommend_id: recommendData.recommend_id }),
+            fetchPost("/recommend/delete", {
+                recommend_id: recommendData.recommend_id,
+            }),
         {
             manual: true,
             onSuccess: () => {
@@ -159,7 +163,11 @@ const ManagementRecommend: React.FC = () => {
                     onChange: handlePageChange,
                 }}
                 columns={[
-                    { title: _l.TID_COMMON_ID, dataIndex: "recommend_id", key: "recommend_id" },
+                    {
+                        title: _l.TID_COMMON_ID,
+                        dataIndex: "recommend_id",
+                        key: "recommend_id",
+                    },
                     {
                         title: _l.TID_MAMAGE_RECOMMEND_INFO,
                         dataIndex: "res_info",
@@ -183,6 +191,43 @@ const ManagementRecommend: React.FC = () => {
                         },
                     },
                     {
+                        title: _l.TID_COMMON_PREVIEW,
+                        key: "preview",
+                        render: (_, record) => {
+                            const resourceUrl = resUrl(record.res_info);
+                            switch (record.res_type) {
+                                case "txt":
+                                    return null;
+                                case "img":
+                                    return (
+                                        <img
+                                            src={resourceUrl}
+                                            alt="resource"
+                                            style={{
+                                                width: 100,
+                                                height: 100,
+                                                objectFit: "cover",
+                                            }}
+                                        />
+                                    );
+                                case "video":
+                                    return (
+                                        <video
+                                            src={resourceUrl}
+                                            controls
+                                            style={{
+                                                width: 100,
+                                                height: 100,
+                                                objectFit: "cover",
+                                            }}
+                                        />
+                                    );
+                                default:
+                                    return null;
+                            }
+                        },
+                    },
+                    {
                         title: _l.TID_MAMAGE_RECOMMEND_RANDOM,
                         dataIndex: "random_num",
                         key: "random_num",
@@ -198,9 +243,7 @@ const ManagementRecommend: React.FC = () => {
                                     {_l.TID_COMMON_EDIT}
                                 </Button>
                                 <Popconfirm
-                                    title={
-                                        _l.TID_COMMON_REMOVE_CONFIRM
-                                    }
+                                    title={_l.TID_COMMON_REMOVE_CONFIRM}
                                     onConfirm={() => handleDelete(recommend)}
                                     okText={_l.TID_COMMON_CONFIRM}
                                     cancelText={_l.TID_COMMON_CANCEL}
@@ -258,11 +301,7 @@ const ManagementRecommend: React.FC = () => {
             />
 
             <Modal
-                title={
-                    isEditing
-                        ? _l.TID_COMMON_EDIT
-                        : _l.TID_COMMON_ADD
-                }
+                title={isEditing ? _l.TID_COMMON_EDIT : _l.TID_COMMON_ADD}
                 open={isModalVisible}
                 onOk={isEditing ? handleUpdateRecommend : handleAddRecommend}
                 onCancel={() => setIsModalVisible(false)}
@@ -325,7 +364,6 @@ const ManagementRecommend: React.FC = () => {
                     >
                         <InputNumber />
                     </Form.Item>
-
                 </Form>
             </Modal>
         </div>
