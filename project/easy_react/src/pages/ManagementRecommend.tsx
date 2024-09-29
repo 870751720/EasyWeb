@@ -329,7 +329,7 @@ const ManagementRecommend: React.FC = () => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input.TextArea rows={4} maxLength={500} />
                     </Form.Item>
                     <Form.Item
                         name="res_type"
