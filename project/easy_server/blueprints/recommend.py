@@ -43,7 +43,7 @@ def recommend_delete(_):
 @token_and_roles_required(["admin", "superadmin"])
 def recommend_update(_):
 	data = request.get_json()
-	recommend_id = data.get("id")
+	recommend_id = data.get("recommend_id")
 	recommend = Recommend.query.get(recommend_id)
 	if not recommend:
 		return jsonify({"error": _l("TID_COMMON_NOT_FOUND"), "status": 0})

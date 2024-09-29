@@ -174,6 +174,18 @@ const ManagementUser: React.FC = () => {
                         title: _l.TID_MANAGE_USER_ROLE,
                         dataIndex: "role",
                         key: "role",
+                        render: (role: string) => {
+                            switch (role) {
+                                case "user":
+                                    return _l.TID_MANAGE_USER_ROLE_USER;
+                                case "admin":
+                                    return _l.TID_MANAGE_USER_ROLE_ADMIN;
+                                case "superadmin":
+                                    return _l.TID_MANAGE_USER_ROLE_SUPER;
+                                default:
+                                    return role;
+                            }
+                        },
                     },
                     {
                         title: _l.TID_COMMON_OPERATION,

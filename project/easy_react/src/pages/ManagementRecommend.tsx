@@ -169,6 +169,18 @@ const ManagementRecommend: React.FC = () => {
                         title: _l.TID_MAMAGE_RECOMMEND_TYPE,
                         dataIndex: "res_type",
                         key: "res_type",
+                        render: (res_type: string) => {
+                            switch (res_type) {
+                                case "txt":
+                                    return _l.TID_COMMON_TXT;
+                                case "img":
+                                    return _l.TID_COMMON_IMG;
+                                case "video":
+                                    return _l.TID_COMMON_VIDEO;
+                                default:
+                                    return res_type;
+                            }
+                        },
                     },
                     {
                         title: _l.TID_MAMAGE_RECOMMEND_RANDOM,
