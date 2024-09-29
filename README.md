@@ -11,6 +11,7 @@
 2 进入install_svr 执行new_ip.bat,输入新ip
 3 docker环境拉不下来的话,通过push tag docker*来执行
 4 调用init_project/create
+5 git clone git@github.com:870751720/870751720.github.io.git 在index.html上把新ip替换了
 
 # 迁移数据
 需要保证dokcer先运行了
