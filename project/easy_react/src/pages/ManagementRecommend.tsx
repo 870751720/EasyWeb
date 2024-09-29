@@ -9,6 +9,7 @@ import {
     Popconfirm,
     Select,
     Table,
+    InputNumber,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import _l from "../utils/i18n";
@@ -310,7 +311,7 @@ const ManagementRecommend: React.FC = () => {
                             },
                         ]}
                     >
-                        <Input />
+                        <InputNumber />
                     </Form.Item>
 
                 </Form>

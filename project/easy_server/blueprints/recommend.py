@@ -74,7 +74,7 @@ def recommend_recommends(_):
 	recommends_info = []
 	for recommend in recommends:
 		recommends_info.append({
-			"id": recommend.id,
+			"recommend_id": recommend.id,
 			"res_info": recommend.res_info,
 			"res_type": recommend.res_type,
 			"random_num": recommend.random_num,
