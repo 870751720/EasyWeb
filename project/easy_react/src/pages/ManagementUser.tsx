@@ -16,7 +16,7 @@ import { fetchGet, fetchPost } from "../utils/netUtil";
 
 const PAGE_SIZE = 10;
 
-const UserManagement: React.FC = () => {
+const ManagementUser: React.FC = () => {
     interface User {
         user_id: number;
         username: string;
@@ -33,11 +33,11 @@ const UserManagement: React.FC = () => {
     const [form] = Form.useForm();
 
     const { run: fetchUsersCountRequest } = useRequest(
-        () => fetchGet("/user/users_count"),
+        () => fetchGet("/user/count"),
         {
             manual: true,
             onSuccess: (data) => {
-                setTotalUsers(data.users_count);
+                setTotalUsers(data.count);
             },
         }
     );
@@ -339,4 +339,4 @@ const UserManagement: React.FC = () => {
     );
 };
 
-export default UserManagement;
+export default ManagementUser;

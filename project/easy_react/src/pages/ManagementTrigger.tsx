@@ -4,7 +4,7 @@ import React from "react";
 import _l from "../utils/i18n";
 import { fetchGet } from "../utils/netUtil";
 
-const TriggerManagement: React.FC = () => {
+const ManagementTrigger: React.FC = () => {
     const { run: fetchDropRequest } = useRequest(
         () => fetchGet("/init_project/drop"),
         {
@@ -24,4 +24,4 @@ const TriggerManagement: React.FC = () => {
     );
 };
 
-export default TriggerManagement;
+export default ManagementTrigger;

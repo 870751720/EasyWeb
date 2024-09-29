@@ -10,13 +10,13 @@ init_project_bp = Blueprint("init_project", __name__)
 
 @init_project_bp.route("/drop", methods=["GET"])
 @token_and_roles_required(["superadmin"])
-def drop(_):
+def init_project_drop(_):
 	db.drop_all()
 	return jsonify({"message": _l("TID_INIT_PROJECT_DROP_SUCCESS"), "status": 200})
 
 
 @init_project_bp.route("/create", methods=["GET"])
-def create():
+def init_project_create():
 	existing_tables = inspect(db.engine).get_table_names()
 	if "user" not in existing_tables:
 		db.drop_all()

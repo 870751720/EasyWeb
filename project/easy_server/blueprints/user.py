@@ -12,7 +12,7 @@ user_bp = Blueprint("user", __name__)
 
 
 @user_bp.route("/register", methods=["POST"])
-def register_user():
+def user_register():
 	data = request.json
 	email = data.get("email")
 	username = data.get("username")
@@ -32,7 +32,7 @@ def register_user():
 
 
 @user_bp.route("/verify", methods=["GET"])
-def verify_registration():
+def user_verify():
 	email = request.args.get("email")
 	verification_code = request.args.get("code")
 	info = verify_code(email, verification_code)
@@ -46,7 +46,7 @@ def verify_registration():
 
 
 @user_bp.route("/login", methods=["POST"])
-def login():
+def user_login():
 	data = request.json
 	email = data.get("email")
 	password = data.get("password")
@@ -61,58 +61,27 @@ def login():
 	return jsonify({"token": token, "status": 200})
 
 
-@user_bp.route("/user_info", methods=["POST"])
-def get_user_info():
-	data = request.json
-	user_id = data.get("user_id")
-	username = data.get("username")
-	email = data.get("email")
-
-	if not user_id and not username and not email:
-		return jsonify({"error": _l("TID_USER_BASE_REQUIRED"), "status": 0})
-
-	user = None
-	if user_id:
-		user = User.query.get(user_id)
-	elif username:
-		user = User.query.filter_by(username=username).first()
-	elif email:
-		user = User.query.filter_by(email=email).first()
-
-	if not user:
-		return jsonify({"error": _l("TID_USER_NOT_FOUND"), "status": 1})
-
-	user_info = {
-		"user_id": user.id,
-		"username": user.username,
-		"email": user.email,
-		"role": user.role,
-	}
-
-	return jsonify({"user_info": user_info, "status": 200})
-
-
 @user_bp.route("/self_info", methods=["GET"])
 @token_and_roles_required(["admin", "superadmin", "user"])
-def get_self_info(current_user):
+def user_self_info(current_user):
 	user_id = current_user.id
 	user = User.query.get(user_id)
 	if not user:
 		return jsonify({"error": _l("TID_USER_NOT_FOUND"), "status": 1})
 
-	user_info = {
+	self_info = {
 		"user_id": user.id,
 		"username": user.username,
 		"email": user.email,
 		"role": user.role,
 	}
 
-	return jsonify({"user_info": user_info, "status": 200})
+	return jsonify({"self_info": self_info, "status": 200})
 
 
 @user_bp.route("/update", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin", "user"])
-def update_user(current_user):
+def user_update(current_user):
 	data = request.json
 	user_id = data.get("user_id")
 	new_username = data.get("username")
@@ -139,16 +108,16 @@ def update_user(current_user):
 	return jsonify({"message": _l("TID_USER_UP_SUCCESS"), "status": 200})
 
 
-@user_bp.route("/users_count", methods=["GET"])
+@user_bp.route("/count", methods=["GET"])
 @token_and_roles_required(["admin", "superadmin"])
-def get_users_count(_):
-	users_count = User.query.count()
-	return jsonify({"users_count": users_count, "status": 200})
+def user_count(_):
+	count = User.query.count()
+	return jsonify({"count": count, "status": 200})
 
 
 @user_bp.route("/users", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin"])
-def	get_users(_):
+def	user_users(_):
 	data = request.json
 	page = data.get("page")
 	page_size = data.get("page_size")
@@ -167,7 +136,7 @@ def	get_users(_):
 
 @user_bp.route("/delete", methods=["POST"])
 @token_and_roles_required(["superadmin"])
-def delete_user(_):
+def user_delete(_):
 	data = request.json
 	user_id = data.get("user_id")
 
@@ -186,7 +155,7 @@ def delete_user(_):
 
 @user_bp.route("/add", methods=["POST"])
 @token_and_roles_required(["superadmin"])
-def add_user(_):
+def user_add(_):
 	data = request.json
 	username = data.get("username")
 	password = data.get("password")

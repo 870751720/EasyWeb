@@ -8,7 +8,6 @@ localize_info = {
 		"TID_USER_REGISTERED_SUCCESS": "User registered successfully",
 		"TID_USER_INVALID_CODE": "Invalid verification code",
 		"TID_USER_LOGIN_INVALID": "Invalid credentials",
-		"TID_USER_BASE_REQUIRED": "User ID, username, or email is required",
 		"TID_USER_NOT_FOUND": "User not found",
 		"TID_USER_UP_NEED": "User ID and new username are required",
 		"TID_USER_UP_OTHER": "You can only update your own account",
@@ -32,6 +31,7 @@ localize_info = {
 		"TID_UPLOAD_DELETE_SUCCESS": "File deleted successfully",
 		"TID_INIT_PROJECT_DROP_SUCCESS": "Database dropped successfully",
 		"TID_COMMON_SUCCESS": "Success",
+		"TID_COMMON_NOT_FOUND": "Not found",
 	},
 	"ch": {
 		"TID_USER_INFO_NEED": "邮箱，用户名和密码是必填项",
@@ -40,7 +40,6 @@ localize_info = {
 		"TID_USER_REGISTERED_SUCCESS": "用户注册成功",
 		"TID_USER_INVALID_CODE": "无效的验证码",
 		"TID_USER_LOGIN_INVALID": "密码错误",
-		"TID_USER_BASE_REQUIRED": "用户 ID, 用户名或邮箱是必填项",
 		"TID_USER_NOT_FOUND": "用户不存在",
 		"TID_USER_UP_NEED": "用户 ID 和新用户名是必填项",
 		"TID_USER_UP_OTHER": "您只能更新自己的账户",
@@ -64,6 +63,7 @@ localize_info = {
 		"TID_UPLOAD_DELETE_SUCCESS": "文件删除成功",
 		"TID_INIT_PROJECT_DROP_SUCCESS": "数据库删除成功",
 		"TID_COMMON_SUCCESS": "成功",
+		"TID_COMMON_NOT_FOUND": "未找到",
 	},
 	"jp": {
 		"TID_USER_INFO_NEED": "メールアドレス、ユーザー名、パスワードが必須",
@@ -72,7 +72,6 @@ localize_info = {
 		"TID_USER_REGISTERED_SUCCESS": "ユーザー登録完了",
 		"TID_USER_INVALID_CODE": "無効なコード",
 		"TID_USER_LOGIN_INVALID": "パスワードが違います",
-		"TID_USER_BASE_REQUIRED": "ユーザーID、ユーザー名、メールアドレスが必須",
 		"TID_USER_NOT_FOUND": "ユーザーは存在しません",
 		"TID_USER_UP_NEED": "ユーザーIDと新しいユーザー名が必須",
 		"TID_USER_UP_OTHER": "自分のアカウントしか更新できません",
@@ -96,5 +95,6 @@ localize_info = {
 		"TID_UPLOAD_DELETE_SUCCESS": "ファイルを削除しました",
 		"TID_INIT_PROJECT_DROP_SUCCESS": "データベース削除完了",
 		"TID_COMMON_SUCCESS": "成功",
+		"TID_COMMON_NOT_FOUND": "見つかりません",
 	}
 }

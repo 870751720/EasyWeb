@@ -33,11 +33,11 @@ const Header = () => {
         {
             manual: true,
             onSuccess: (data) => {
-                setUsername(data.user_info.username);
-                setRole(data.user_info.role);
+                setUsername(data.self_info.username);
+                setRole(data.self_info.role);
                 dispatch(setUserInfo({
-                    name: data.user_info.username,
-                    email: data.user_info.email,
+                    name: data.self_info.username,
+                    email: data.self_info.email,
                 }));
             },
             onError: () => {

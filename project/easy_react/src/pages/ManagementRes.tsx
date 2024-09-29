@@ -11,7 +11,7 @@ interface Resource {
     path: string;
 }
 
-const ResManagement: React.FC = () => {
+const ManagementRes: React.FC = () => {
     const [resources, setResources] = useState<Resource[]>([]);
     const [totalResources, setTotalResources] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -19,11 +19,11 @@ const ResManagement: React.FC = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const { run: fetchResourcesCountRequest } = useRequest(
-        () => fetchGet("/upload/resources_count"),
+        () => fetchGet("/upload/count"),
         {
             manual: true,
             onSuccess: (data) => {
-                setTotalResources(data.resources_count);
+                setTotalResources(data.count);
             },
         }
     );
@@ -206,4 +206,4 @@ const ResManagement: React.FC = () => {
     );
 };
 
-export default ResManagement;
+export default ManagementRes;

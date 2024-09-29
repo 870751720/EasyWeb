@@ -14,7 +14,7 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 @upload_bp.route("/upload", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin"])
-def update_user(_):
+def upload_upload(_):
 	file = request.files['file']
 	if 'file' not in request.files:
 		return jsonify({"error": _l("TID_UPLOAD_NO_FILE_PART"), "status": 0})
@@ -31,7 +31,7 @@ def update_user(_):
 
 
 @upload_bp.route("/file/<filename>", methods=["GET"])
-def get_file(filename):
+def upload_file(filename):
 	try:
 		return send_from_directory(UPLOAD_FOLDER, filename)
 	except FileNotFoundError:
@@ -40,7 +40,7 @@ def get_file(filename):
 
 @upload_bp.route("/delete", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin"])
-def delete_file(_):
+def upload_delete(_):
 	data = request.get_json()
 	resource_id = data.get("id")
 
@@ -62,16 +62,16 @@ def delete_file(_):
 	return jsonify({"message": _l("TID_UPLOAD_DELETE_SUCCESS"), "status": 200})
 
 
-@upload_bp.route("/resources_count", methods=["GET"])
+@upload_bp.route("/count", methods=["GET"])
 @token_and_roles_required(["admin", "superadmin"])
-def get_resources_count(_):
-	resources_count = Resource.query.count()
-	return jsonify({"resources_count": resources_count, "status": 200})
+def upload_count(_):
+	count = Resource.query.count()
+	return jsonify({"count": count, "status": 200})
 
 
 @upload_bp.route("/resources", methods=["POST"])
 @token_and_roles_required(["admin", "superadmin"])
-def get_resources(_):
+def upload_resources(_):
 	data = request.json
 	page = data.get("page", 1)
 	page_size = data.get("page_size", 10)

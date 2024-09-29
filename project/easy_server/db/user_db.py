@@ -7,6 +7,3 @@ class User(db.Model):
 	password = db.Column(db.String(255), nullable=False)
 	email = db.Column(db.String(120), unique=True, nullable=True)
 	role = db.Column(db.String(20), default="user")  # user admin superadmin
-
-	def __repr__(self):
-		return f"<User {self.username}>, Role: {self.role}"
