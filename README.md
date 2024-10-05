@@ -23,3 +23,6 @@
 2 上传数据
 backup.tar.gz 上传到新服务器的 tmp
 执行res_upload.bat,获取命令行,在新服务器执行
+
+# cocos 游戏框架
+https://github.com/dgflash/oops-framework
