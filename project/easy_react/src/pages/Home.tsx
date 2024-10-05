@@ -92,7 +92,6 @@ const Home: React.FC = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "flex-start",
-                height: "100vh",
                 paddingTop: "50px",
             }}
         >
