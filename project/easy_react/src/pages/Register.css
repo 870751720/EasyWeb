@@ -1,67 +1,67 @@
 .register-title {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
+	text-align: center;
+	font-size: 24px;
+	margin-bottom: 20px;
+	color: #333;
 }
 
 .custom-register-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #b0b0b0;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: color 0.3s ease, background-color 0.3s ease;
-    z-index: 1;
+	width: 100%;
+	padding: 10px;
+	background-color: #b0b0b0;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	transition: color 0.3s ease, background-color 0.3s ease;
+	z-index: 1;
 }
 
 .custom-register-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+	background-color: #ccc;
+	cursor: not-allowed;
 }
 
 .custom-register-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: rgba(0, 136, 255, 1);
-    transition: width 0.8s ease;
-    z-index: -1;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background: rgba(0, 136, 255, 1);
+	transition: width 0.8s ease;
+	z-index: -1;
 }
 
 .custom-register-button.charging::before {
-    width: 100%;
+	width: 100%;
 }
 
 .login-link-container {
-    text-align: center;
-    margin-top: 15px;
+	text-align: center;
+	margin-top: 15px;
 }
 
 .login-link {
-    background: none;
-    border: none;
-    color: #007bff;
-    font-size: 14px;
-    text-decoration: underline;
-    cursor: pointer;
-    padding: 0;
-    transition: color 0.3s ease;
+	background: none;
+	border: none;
+	color: #007bff;
+	font-size: 14px;
+	text-decoration: underline;
+	cursor: pointer;
+	padding: 0;
+	transition: color 0.3s ease;
 }
 
 .login-link:hover {
-    color: #0056b3;
-    text-decoration: none;
+	color: #0056b3;
+	text-decoration: none;
 }
 
 .login-link:focus {
-    outline: none;
+	outline: none;
 }

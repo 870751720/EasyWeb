@@ -1,32 +1,32 @@
 {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": "explicit"
-    },
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "isort.args": ["--profile", "black"],
-    "python.analysis.autoFormatStrings": true,
-    "python.languageServer": "Pylance",
-    "git.postCommitCommand": "push",
-    "git.rebaseWhenSync": true,
-    "files.exclude": {
-        ".editorconfig": true,
-        ".gitattributes": true,
-        ".gitignore": true,
-        "**/__pycache__": true,
-        "**/.github": true,
-        "**/.vscode": true,
-        "**/node_modules": true
-    },
-    "files.watcherExclude": {
-        "**/node_modules": true
-    },
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "prettier.semi": false,
-    "prettier.useTabs": true,
-    "prettier.tabWidth": 4,
-    "prettier.trailingComma": "none",
-    
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "explicit"
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"isort.args": ["--profile", "black"],
+	"python.analysis.autoFormatStrings": true,
+	"python.languageServer": "Pylance",
+	"git.postCommitCommand": "push",
+	"git.rebaseWhenSync": true,
+	"files.exclude": {
+		".editorconfig": true,
+		".gitattributes": true,
+		".gitignore": true,
+		"**/__pycache__": true,
+		"**/.github": true,
+		"**/.vscode": true,
+		"**/node_modules": true
+	},
+	"files.watcherExclude": {
+		"**/node_modules": true
+	},
+	"prettier.semi": false,
+	"prettier.useTabs": true,
+	"prettier.tabWidth": 4,
+	"prettier.trailingComma": "none",
+	"files.autoSave": "afterDelay",
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.black-formatter"
+	}
 }
