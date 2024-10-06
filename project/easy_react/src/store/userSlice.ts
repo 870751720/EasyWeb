@@ -13,6 +13,7 @@ const initialState: UserState = {
   userInfo: null,
 };
 
+
 const userSlice = createSlice({
   name: 'user',
   initialState,

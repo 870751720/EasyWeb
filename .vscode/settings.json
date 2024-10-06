@@ -1,7 +1,7 @@
 {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
+        "source.organizeImports": "explicit"
     },
     "editor.defaultFormatter": "ms-python.black-formatter",
     "isort.args": ["--profile", "black"],
@@ -21,4 +21,12 @@
     "files.watcherExclude": {
         "**/node_modules": true
     },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.semi": false,
+    "prettier.useTabs": true,
+    "prettier.tabWidth": 4,
+    "prettier.trailingComma": "none",
+    
 }

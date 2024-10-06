@@ -9,6 +9,7 @@
 		"editorconfig.editorconfig",
 		"slightc.pip-manager",
 		"mhutchie.git-graph",
-		"ms-python.isort"
+		"ms-python.isort",
+		"esbenp.prettier-vscode"
 	]
 }
