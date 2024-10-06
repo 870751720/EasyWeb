@@ -3,5 +3,17 @@
     "editor.formatOnSave": true,
     "python.languageServer": "Pylance",
     "git.postCommitCommand": "push",
-    "git.rebaseWhenSync": true
+    "git.rebaseWhenSync": true,
+    "files.exclude": {
+        ".editorconfig": true,
+        ".gitattributes": true,
+        ".gitignore": true,
+        "**/__pycache__": true,
+        "**/.github": true,
+        "**/.vscode": true,
+        "**/node_modules": true
+    },
+    "files.watcherExclude": {
+        "**/node_modules": true
+    },
 }
