@@ -1,3 +1,5 @@
 {
-	"git.ignoreLimitWarning": true
+    "python.analysis.autoFormatStrings": true,
+    "editor.formatOnSave": true,
+    "python.languageServer": "Pylance"
 }

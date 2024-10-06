@@ -1,5 +1,12 @@
 {
 	"recommendations": [
+		"ms-ceintl.vscode-language-pack-zh-hans",
+		"bobronium.darcula-from-pycharm",
+		"ms-python.python",
+		"ms-python.black-formatter",
+		"github.copilot",
+		"ms-python.vscode-pylance",
+		"editorconfig.editorconfig",
 		"slightc.pip-manager"
 	]
 }
