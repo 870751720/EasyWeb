@@ -1,5 +1,7 @@
 {
     "python.analysis.autoFormatStrings": true,
     "editor.formatOnSave": true,
-    "python.languageServer": "Pylance"
+    "python.languageServer": "Pylance",
+    "git.postCommitCommand": "push",
+    "git.rebaseWhenSync": true
 }
