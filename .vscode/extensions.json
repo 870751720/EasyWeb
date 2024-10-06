@@ -8,6 +8,7 @@
 		"ms-python.vscode-pylance",
 		"editorconfig.editorconfig",
 		"slightc.pip-manager",
-		"mhutchie.git-graph"
+		"mhutchie.git-graph",
+		"ms-python.isort"
 	]
 }

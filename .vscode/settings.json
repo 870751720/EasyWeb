@@ -1,6 +1,11 @@
 {
-    "python.analysis.autoFormatStrings": true,
     "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true,
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "isort.args": ["--profile", "black"],
+    "python.analysis.autoFormatStrings": true,
     "python.languageServer": "Pylance",
     "git.postCommitCommand": "push",
     "git.rebaseWhenSync": true,

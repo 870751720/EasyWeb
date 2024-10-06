@@ -1,7 +1,7 @@
-from flask import Flask
-from flask_cors import CORS
 from blueprints import init_blueprints
 from db.db import init_db
+from flask import Flask
+from flask_cors import CORS
 from utils.mail import init_mail
 from utils.page import init_page
 
