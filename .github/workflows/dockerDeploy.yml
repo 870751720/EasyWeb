@@ -52,5 +52,5 @@ jobs:
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   port: 22
                   script: |
-                      chmod +x /tmp/dockerDeploy.sh
-                      /tmp/dockerDeploy.sh
+                      chmod +x /tmp/project/dockerDeploy.sh
+                      /tmp/project/dockerDeploy.sh
