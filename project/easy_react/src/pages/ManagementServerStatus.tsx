@@ -1,43 +1,29 @@
 import { useRequest } from "ahooks"
 import { Card, Col, Row, Statistic } from "antd"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import _l from "../utils/i18n"
 import { fetchGet } from "../utils/netUtil"
 
 const ManagementServerStatus: React.FC = () => {
 	const [serverStatus, setServerStatus] = useState<any>(null)
-	const ref = useRef<HTMLDivElement>(null)
 	const { run: fetchServerStatusRequest } = useRequest(
 		() => fetchGet("/server_status/get"),
 		{
 			manual: true,
 			onSuccess: (data) => {
+				console.log(data)
 				setServerStatus(data)
 			}
 		}
 	)
 
 	useEffect(() => {
-		const observer = new IntersectionObserver(([entry]) => {
-			if (entry.isIntersecting) {
-				fetchServerStatusRequest()
-				const interval = setInterval(fetchServerStatusRequest, 1000)
+		fetchServerStatusRequest()
+		const interval = setInterval(() => {
+			fetchServerStatusRequest()
+		}, 3000)
 
-				return () => clearInterval(interval)
-			}
-		})
-
-		const currentRef = ref.current
-
-		if (currentRef) {
-			observer.observe(currentRef)
-		}
-
-		return () => {
-			if (currentRef) {
-				observer.unobserve(currentRef)
-			}
-		}
+		return () => clearInterval(interval)
 	}, [fetchServerStatusRequest])
 
 	return (
@@ -48,22 +34,26 @@ const ManagementServerStatus: React.FC = () => {
 						<Card title={_l.TID_COMMON_MEMORY} bordered={false}>
 							<Statistic
 								title={_l.TID_COMMON_TOTAL}
-								value={
-									serverStatus.memory.total / (1024 * 1024)
-								}
+								value={(
+									serverStatus.memory.total /
+									(1024 * 1024)
+								).toFixed(1)}
 								suffix="MB"
 							/>
 							<Statistic
 								title={_l.TID_COMMON_AVAILABLE}
-								value={
+								value={(
 									serverStatus.memory.available /
 									(1024 * 1024)
-								}
+								).toFixed(1)}
 								suffix="MB"
 							/>
 							<Statistic
 								title={_l.TID_COMMON_USED}
-								value={serverStatus.memory.used / (1024 * 1024)}
+								value={(
+									serverStatus.memory.used /
+									(1024 * 1024)
+								).toFixed(1)}
 								suffix="MB"
 							/>
 							<Statistic
@@ -86,12 +76,18 @@ const ManagementServerStatus: React.FC = () => {
 						<Card title={_l.TID_COMMON_DISK} bordered={false}>
 							<Statistic
 								title={_l.TID_COMMON_TOTAL}
-								value={serverStatus.disk.total / (1024 * 1024)}
+								value={(
+									serverStatus.disk.total /
+									(1024 * 1024)
+								).toFixed(1)}
 								suffix="MB"
 							/>
 							<Statistic
-								title={_l.TID_COMMON_AVAILABLE}
-								value={serverStatus.disk.used / (1024 * 1024)}
+								title={_l.TID_COMMON_USED}
+								value={(
+									serverStatus.disk.used /
+									(1024 * 1024)
+								).toFixed(1)}
 								suffix="MB"
 							/>
 						</Card>
@@ -100,18 +96,18 @@ const ManagementServerStatus: React.FC = () => {
 						<Card title={_l.TID_COMMON_NETWORK} bordered={false}>
 							<Statistic
 								title={_l.TID_COMMON_SENT}
-								value={
+								value={(
 									serverStatus.network.bytes_sent /
 									(1024 * 1024)
-								}
+								).toFixed(1)}
 								suffix="MB"
 							/>
 							<Statistic
 								title={_l.TID_COMMON_RECEIVED}
-								value={
+								value={(
 									serverStatus.network.bytes_recv /
 									(1024 * 1024)
-								}
+								).toFixed(1)}
 								suffix="MB"
 							/>
 						</Card>
